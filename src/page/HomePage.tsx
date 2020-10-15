@@ -2,6 +2,7 @@ import React from 'react';
 import {QCM} from "../Data";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 
 export default function HomePage(){
     return (
@@ -17,10 +18,10 @@ export default function HomePage(){
                 </div>
             </div>
             <div className="mt-10 flex">
-                <div className="my-btn-anim select-none mx-auto px-4 py-2 rounded text-white bg-gradient-to-r from-teal-400 to-blue-500 shadow-md cursor-pointer transition duration-150 hover:shadow-lg">
+                <Link to="/form" className="my-btn-anim select-none mx-auto px-4 py-2 rounded text-white bg-gradient-to-r from-teal-400 to-blue-500 shadow-md cursor-pointer transition duration-150 hover:shadow-lg">
                     Ok, let's go
                     <FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>
-                </div>
+                </Link>
             </div>
         </div>
     );

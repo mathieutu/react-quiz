@@ -1,10 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {QCM} from "../Data";
 import DisplayQuestion from "../component/DisplayQuestion";
 import {Response} from "../type/Response";
+import {useIsFormStarted} from "../context/SessionContext";
 
 export default function FormPage(){
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
+    const isFormStarted = useIsFormStarted();
+    useEffect(() => {
+        if(isFormStarted){
+            alert('form déjà commencé !');
+        }
+    },[])
 
     const handleNext = (response:Response) => {
         //TODO : request API send
