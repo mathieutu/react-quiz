@@ -46,7 +46,7 @@ export default function DisplayQuestion(props:Props){
             {answers}
             <div className="flex mt-6">
                 {props.loading ? (
-                    <div className="text-white border bg-gray-600 px-3 py-1 mx-2 cursor-pointer select-none rounded opacity-75">Traitement ...</div>
+                    <div className="text-white border bg-gray-700 px-3 py-1 mx-2 cursor-pointer select-none rounded opacity-50">Traitement ...</div>
                 ) : (
                     <div onClick={() => {props.handleNext({questionId:props.question.id,responses:userResponse})}}
                          className="my-btn-anim hover:bg-white hover:text-blue-600 text-white border border-blue-400 bg-blue-400 px-3 py-1 mx-2 cursor-pointer select-none rounded transition duration-150">Suivant</div>

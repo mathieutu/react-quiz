@@ -14,7 +14,7 @@ export const NEW_USER_QUERY = gql`
 `;
 
 export const NEW_ANSWER_QUERY = gql`
-    mutation AddAnswer($answer: String, $questionId: String, $userId: UUID) {
+    mutation AddAnswer($answer: String, $questionId: String, $userId: uuid) {
         addAnswer(
             object: {answer: $answer, question_id: $questionId, user_id: $userId},
             on_conflict: {constraint: answers_user_id_question_id_key, update_columns: answer}

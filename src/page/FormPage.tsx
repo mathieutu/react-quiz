@@ -16,9 +16,7 @@ export default function FormPage(){
     const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY);
 
     const handleNext = (userResponse:Response) => {
-        //TODO : request API send
         addAnswer({ variables: { answer: JSON.stringify(userResponse.responses), questionId: userResponse.questionId, userId:session.user!.id } }).then(({data}) =>{
-            console.log(data);
             session.updateSession('formStep',currentQuestionIndex + 1);
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         }).catch((e) => {
