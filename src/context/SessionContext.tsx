@@ -43,9 +43,17 @@ export default function ApplicationSession(props:any){
             case 'isFormStarted':
                 handleIsFormStarted(value);
                 break;
+            case 'logout':
+                logout();
+                break;
             default:
                 break;
         }
+    }
+
+    const logout = () => {
+        localStorage.clear();
+        setSessionState(sessionDefaultValues);
     }
 
     const handleFormStep = (newFormStep:number) => {

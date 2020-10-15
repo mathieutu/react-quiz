@@ -3,6 +3,7 @@ import {QCM} from "../Data";
 import DisplayQuestion from "../component/DisplayQuestion";
 import {Response} from "../type/Response";
 import {useSession} from "../context/SessionContext";
+import EndPage from "./EndPage";
 
 export default function FormPage(){
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
@@ -22,10 +23,14 @@ export default function FormPage(){
     },[])
     return (
         <div className="m-10 w-full">
-            <div className="text-right italic text-lg">Question {currentQuestionIndex + 1}/{QCM.length}</div>
             {QCM[currentQuestionIndex] !== undefined ? (
-                <DisplayQuestion question={QCM[currentQuestionIndex]} handleNext={handleNext}/>
-            ) : ('fini')}
+                <>
+                    <div className="text-right italic text-lg">Question {currentQuestionIndex + 1}/{QCM.length}</div>
+                    <DisplayQuestion question={QCM[currentQuestionIndex]} handleNext={handleNext}/>
+                </>
+            ) : (
+                <EndPage/>
+            )}
         </div>
     );
 }
