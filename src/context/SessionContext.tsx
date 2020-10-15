@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 type SessionType = {
     user:string|null,
@@ -72,8 +72,16 @@ export default function ApplicationSession(props:any){
     const handleUser = (newUser:string) => {
         if(newUser !== null){
             setSessionState({...sessionState, user:newUser});
+            localStorage.setItem('user',newUser);
         }
     }
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if(storedUser !== null){
+            setSessionState({...sessionState,user:JSON.parse(storedUser)});
+        }
+    },[])
 
     return (
         <sessionContext.Provider value={{...sessionState,updateSession:handleUpdateSession}}>
