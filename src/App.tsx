@@ -18,7 +18,7 @@ function App() {
             ) : (
                 <>
                     <Header/>
-                    <div className="container shadow-lg flex min-h-screen mx-auto bg-white h-full">
+                    <div className="container shadow-lg flex mx-auto bg-white h-full">
                         <Switch>
                             <Route exact path="/"><HomePage/></Route>
                             <Route exact path="/form"><FormPage/></Route>

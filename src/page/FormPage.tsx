@@ -4,6 +4,7 @@ import DisplayQuestion from "../component/DisplayQuestion";
 import {Response} from "../type/Response";
 import {useSession} from "../context/SessionContext";
 import EndPage from "./EndPage";
+import {RiPushpin2Fill} from "react-icons/all";
 
 export default function FormPage(){
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
@@ -25,7 +26,10 @@ export default function FormPage(){
         <div className="m-10 w-full">
             {QCM[currentQuestionIndex] !== undefined ? (
                 <>
-                    <div className="text-right italic text-lg">Question {currentQuestionIndex + 1}/{QCM.length}</div>
+                    <div className="text-right italic text-lg flex justify-end">
+                        <div className='my-auto'>Question {currentQuestionIndex + 1}/{QCM.length}</div>
+                        <RiPushpin2Fill className="my-auto ml-2"/>
+                    </div>
                     <DisplayQuestion question={QCM[currentQuestionIndex]} handleNext={handleNext}/>
                 </>
             ) : (

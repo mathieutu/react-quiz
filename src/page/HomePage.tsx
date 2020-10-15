@@ -22,7 +22,7 @@ export default function HomePage(){
     },[]);
 
     return (
-        <div className="flex h-full flex-col mx-24 mt-16 text-lg">
+        <div className="flex h-full flex-col mx-24 my-16 text-lg">
             <div className="pl-6 border-l-2">
                 <div className="mb-6">
                     <b>Attention</b>, prenez connaissance des règles ci-dessous avant de commencer le questionnaire :
