@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {sessionContext} from "../context/SessionContext";
 import { useHistory } from 'react-router';
+import Button from "../component/Button";
 
 export default function LoginPage(){
     const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ export default function LoginPage(){
             session.updateSession('user',JSON.stringify({email:email,name:name,id:'fdhsgfdgd56454df'}));
             history.push('/');
         }
-    }
+    };
 
     return (
         <div className="text-lg flex h-screen bg-white w-screen">
@@ -30,10 +31,7 @@ export default function LoginPage(){
                     <input type="text" required className="w-full p-2 px-3 rounded" placeholder="NOM Prénom" onChange={(e) => setName(e.currentTarget.value)}/>
                 </div>
                 <div className="mt-10 flex">
-                    <button onClick={handleSubmit} className="my-btn-anim select-none mx-auto px-4 py-2 rounded text-white bg-gradient-to-r from-teal-400 to-blue-500 shadow-md cursor-pointer transition duration-150 hover:shadow-lg">
-                        Commencer
-                        <FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>
-                    </button>
+                    <Button handleOnClick={handleSubmit} text={'Commencer'} icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>}/>
                 </div>
             </form>
         </div>

@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from 'react-router';
 import {useSession} from "../context/SessionContext";
+import Button from "../component/Button";
 
 export default function HomePage(){
     const history = useHistory();
@@ -12,7 +13,7 @@ export default function HomePage(){
     const handleClick = () => {
         session.updateSession('isFormStarted',true);
         history.push('/form');
-    }
+    };
 
     useEffect(() => {
         if(session.isFormStarted){
@@ -33,10 +34,7 @@ export default function HomePage(){
                 </div>
             </div>
             <div className="mt-10 flex">
-                <div onClick={handleClick} className="my-btn-anim select-none mx-auto px-4 py-2 rounded text-white bg-gradient-to-r from-teal-400 to-blue-500 shadow-md cursor-pointer transition duration-150 hover:shadow-lg">
-                    Ok, let's go
-                    <FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>
-                </div>
+                <Button handleOnClick={handleClick} text={"C'est parti !"} icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>}/>
             </div>
         </div>
     );

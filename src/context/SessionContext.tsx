@@ -10,7 +10,7 @@ type SessionValue = {
     user:string|null,
     formStep:number,
     isFormStarted:boolean,
-    updateSession(type:string,value:any):void
+    updateSession(type:string,value?:any):void
 }
 
 const sessionDefaultValues:SessionType = {
@@ -27,12 +27,12 @@ export const useSession = () => {
         throw new Error("Le contexte doit être défini");
     }
     return context;
-}
+};
 
 export default function ApplicationSession(props:any){
     const [sessionState, setSessionState] = useState<SessionType>(sessionDefaultValues);
 
-    const handleUpdateSession = (type:string,value:any) => {
+    const handleUpdateSession = (type:string,value?:any) => {
         switch(type){
             case 'user':
                 handleUser(value);
@@ -49,33 +49,33 @@ export default function ApplicationSession(props:any){
             default:
                 break;
         }
-    }
+    };
 
     const logout = () => {
         localStorage.clear();
         setSessionState(sessionDefaultValues);
-    }
+    };
 
     const handleFormStep = (newFormStep:number) => {
         if(newFormStep > sessionState.formStep){
             setSessionState({...sessionState, formStep:newFormStep});
             localStorage.setItem('formStep',newFormStep.toString());
         }
-    }
+    };
 
     const handleUser = (newUser:string) => {
         if(newUser !== null){
             setSessionState({...sessionState, user:newUser});
             localStorage.setItem('user',newUser);
         }
-    }
+    };
 
     const handleIsFormStarted = (newIsStarted:boolean) => {
         if(newIsStarted !== null){
             setSessionState({...sessionState, isFormStarted:newIsStarted});
             localStorage.setItem('isFormStarted',(newIsStarted ? 'true' : 'false'));
         }
-    }
+    };
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -92,7 +92,7 @@ export default function ApplicationSession(props:any){
             newSessionState = {...newSessionState,formStep:JSON.parse(storedFormStep)};
         }
         setSessionState(newSessionState);
-    },[])
+    },[]);
 
     return (
         <sessionContext.Provider value={{...sessionState,updateSession:handleUpdateSession}}>

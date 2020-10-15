@@ -20,7 +20,7 @@ export default function FormPage(){
         if(session.formStep !== undefined){
             setCurrentQuestionIndex(session.formStep);
         }
-    },[])
+    },[]);
     return (
         <div className="m-10 w-full">
             {QCM[currentQuestionIndex] !== undefined ? (

@@ -14,7 +14,7 @@ export default function DisplayQuestion(props:Props){
 
     useEffect(() => {
         setUserResponse([]);
-    },[props.question])
+    },[props.question]);
 
     const handleResponseChange = (e:any) => {
         const value:string = e.currentTarget.value;
@@ -25,14 +25,14 @@ export default function DisplayQuestion(props:Props){
             newResponses = removeFromArray(value,newResponses);
         }
         setUserResponse(newResponses);
-    }
+    };
 
     const answers = (
         <>
             {props.question.answers.map((answer) =>{
                 return (
-                    <div key={props.question.id + '-' + answer.key} className="my-4 flex text-lg">
-                        <input type="checkbox" defaultChecked={false} className="cursor-pointer" id={'response-'+ props.question.id +'-'+answer.key} value={answer.key} onChange={handleResponseChange}/>
+                    <div key={props.question.id + '-' + answer.key} className="my-4 flex text-lg ml-4">
+                        <input type="checkbox" defaultChecked={false} className="cursor-pointer my-auto" id={'response-'+ props.question.id +'-'+answer.key} value={answer.key} onChange={handleResponseChange}/>
                         <label className="ml-2 cursor-pointer" htmlFor={'response-'+ props.question.id +'-'+answer.key}>{answer.text}</label>
                     </div>
                 );
