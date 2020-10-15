@@ -5,11 +5,12 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import HomePage from "./page/HomePage";
 import FormPage from "./page/FormPage";
 import ErrorPage from "./page/ErrorPage/ErrorPage";
-import {useUser} from "./context/SessionContext";
+import {useSession} from "./context/SessionContext";
 import LoginPage from "./page/LoginPage";
 
 function App() {
-    const user = useUser();
+    const {user} = useSession();
+
     return (
         <BrowserRouter>
             {user === null ? (

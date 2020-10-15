@@ -1,10 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {QCM} from "../Data";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import {Link} from "react-router-dom";
+import {useHistory} from 'react-router';
+import {useSession} from "../context/SessionContext";
 
 export default function HomePage(){
+    const history = useHistory();
+    const session = useSession();
+
+    const handleClick = () => {
+        session.updateSession('isFormStarted',true);
+        history.push('/form');
+    }
+
+    useEffect(() => {
+        if(session.isFormStarted){
+            history.push('/form');
+        }
+    },[]);
+
     return (
         <div className="flex h-full flex-col mx-24 mt-16 text-lg">
             <div className="pl-6 border-l-2">
@@ -18,10 +33,10 @@ export default function HomePage(){
                 </div>
             </div>
             <div className="mt-10 flex">
-                <Link to="/form" className="my-btn-anim select-none mx-auto px-4 py-2 rounded text-white bg-gradient-to-r from-teal-400 to-blue-500 shadow-md cursor-pointer transition duration-150 hover:shadow-lg">
+                <div onClick={handleClick} className="my-btn-anim select-none mx-auto px-4 py-2 rounded text-white bg-gradient-to-r from-teal-400 to-blue-500 shadow-md cursor-pointer transition duration-150 hover:shadow-lg">
                     Ok, let's go
                     <FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>
-                </Link>
+                </div>
             </div>
         </div>
     );

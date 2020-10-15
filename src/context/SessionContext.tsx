@@ -21,28 +21,12 @@ const sessionDefaultValues:SessionType = {
 
 export const sessionContext = React.createContext<SessionValue|undefined>(undefined);
 
-export const useUser = () => {
+export const useSession = () => {
     const context = useContext(sessionContext);
     if(context === undefined){
         throw new Error("Le contexte doit être défini");
     }
-    return context.user;
-}
-
-export const useFormStep = () => {
-    const context = useContext(sessionContext);
-    if(context === undefined){
-        throw new Error("Le contexte doit être défini");
-    }
-    return context.formStep;
-}
-
-export const useIsFormStarted = () => {
-    const context = useContext(sessionContext);
-    if(context === undefined){
-        throw new Error("Le contexte doit être défini");
-    }
-    return context.isFormStarted;
+    return context;
 }
 
 export default function ApplicationSession(props:any){
@@ -57,6 +41,7 @@ export default function ApplicationSession(props:any){
                 handleFormStep(value);
                 break;
             case 'isFormStarted':
+                handleIsFormStarted(value);
                 break;
             default:
                 break;
@@ -66,6 +51,7 @@ export default function ApplicationSession(props:any){
     const handleFormStep = (newFormStep:number) => {
         if(newFormStep > sessionState.formStep){
             setSessionState({...sessionState, formStep:newFormStep});
+            localStorage.setItem('formStep',newFormStep.toString());
         }
     }
 
@@ -76,11 +62,28 @@ export default function ApplicationSession(props:any){
         }
     }
 
+    const handleIsFormStarted = (newIsStarted:boolean) => {
+        if(newIsStarted !== null){
+            setSessionState({...sessionState, isFormStarted:newIsStarted});
+            localStorage.setItem('isFormStarted',(newIsStarted ? 'true' : 'false'));
+        }
+    }
+
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
+        const storedIsFormStarted = localStorage.getItem('isFormStarted');
+        const storedFormStep = localStorage.getItem('formStep');
+        let newSessionState = sessionState;
         if(storedUser !== null){
-            setSessionState({...sessionState,user:JSON.parse(storedUser)});
+            newSessionState = {...newSessionState,user:JSON.parse(storedUser)};
         }
+        if(storedIsFormStarted !== null){
+            newSessionState = {...newSessionState,isFormStarted:JSON.parse(storedIsFormStarted)};
+        }
+        if(storedFormStep !== null){
+            newSessionState = {...newSessionState,formStep:JSON.parse(storedFormStep)};
+        }
+        setSessionState(newSessionState);
     },[])
 
     return (
