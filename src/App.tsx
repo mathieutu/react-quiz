@@ -1,32 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './assets/css/App.css';
-import {QCM} from "./Data";
-import DisplayQuestion from "./component/DisplayQuestion";
-import {Response} from "./type/Response";
 import Header from "./component/Header";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import HomePage from "./page/HomePage";
+import FormPage from "./page/FormPage";
+import ErrorPage from "./page/ErrorPage/ErrorPage";
+import ApplicationSession from "./context/SessionContext";
 
 function App() {
-    const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
-
-    const handleNext = (response:Response) => {
-        //TODO : request API send
-        console.log(response);
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-    };
-
-  return (
-      <div>
-          <Header/>
-          <div className="container shadow-lg flex min-h-screen mx-auto bg-white h-full">
-              <div className="m-10 w-full">
-                  <div className="text-right italic text-lg">Question {currentQuestionIndex + 1}/{QCM.length}</div>
-                  {QCM[currentQuestionIndex] !== undefined ? (
-                      <DisplayQuestion question={QCM[currentQuestionIndex]} handleNext={handleNext}/>
-                  ) : ('fini')}
-              </div>
-          </div>
-      </div>
-  );
+    return (
+        <ApplicationSession>
+            <BrowserRouter>
+                <Header/>
+                <div className="container shadow-lg flex min-h-screen mx-auto bg-white h-full">
+                    <Switch>
+                        <Route exact path="/"><HomePage/></Route>
+                        <Route exact path="/form"><FormPage/></Route>
+                        <Route><ErrorPage code={404} message={"Not Found"}/></Route>
+                    </Switch>
+                </div>
+            </BrowserRouter>
+        </ApplicationSession>
+    );
 }
 
 export default App;

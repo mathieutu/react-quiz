@@ -2,11 +2,11 @@ body{
     background-color: #edf2f7;
 }
 
-.form-btn:active{
+.my-btn-anim:active{
     transform: scale(0.95);
 }
 
-.form-btn-disabled{
+.my-btn-anim-disabled{
     background-color: dimgrey;
     opacity: 0.75;
 }
