@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {sessionContext} from "../context/SessionContext";
@@ -6,8 +6,9 @@ import { useHistory } from 'react-router';
 import Button from "../component/Button";
 import {useMutation} from "@apollo/client";
 import {CgSpinnerTwoAlt} from "react-icons/all";
-import {newUserQuery} from "../utils/queries";
+import {NEW_USER_QUERY} from "../utils/queries";
 import {User} from "../type/User";
+import ErrorDiv from "../component/ErrorDiv";
 
 export default function LoginPage(){
     const [email, setEmail] = useState<string>('');
@@ -15,7 +16,7 @@ export default function LoginPage(){
     const session = useContext(sessionContext);
     const history = useHistory();
     const [formError, setFormError] = useState<string|null>(null);
-    const [addUser, { loading }] = useMutation(newUserQuery());
+    const [addUser, { loading }] = useMutation(NEW_USER_QUERY);
 
     const handleSubmit = (e:any) => {
         e.preventDefault();
@@ -42,9 +43,7 @@ export default function LoginPage(){
     return (
         <div className="text-lg flex h-screen bg-white w-screen">
             <form id="login-form" onSubmit={handleSubmit} className="m-auto w-100 shadow-lg bg-gray-300 flex flex-col p-6">
-                {formError && <div className="my-3 text-red-900 bg-red-300 border border-red-600 rounded px-4 py-2">
-                    {'Une erreur est survenue : ' + formError}
-                </div>}
+                {formError && <ErrorDiv text={formError}/>}
                 <div className="my-4 w-full">
                     <label className="mb-2">Email <span className="text-red-800">*</span></label>
                     <input type="email" required className="w-full focus:shadow-lg p-2 px-3 rounded" placeholder="exemple@domaine.com" onChange={(e) => setEmail(e.currentTarget.value)}/>

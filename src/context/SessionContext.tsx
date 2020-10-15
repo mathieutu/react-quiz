@@ -1,13 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
+import {User} from "../type/User";
 
 type SessionType = {
-    user:string|null,
+    user:User|null,
     formStep:number,
     isFormStarted:boolean
 }
 
 type SessionValue = {
-    user:string|null,
+    user:User|null,
     formStep:number,
     isFormStarted:boolean,
     updateSession(type:string,value?:any):void
@@ -63,10 +64,10 @@ export default function ApplicationSession(props:any){
         }
     };
 
-    const handleUser = (newUser:string) => {
+    const handleUser = (newUser:User) => {
         if(newUser !== null){
             setSessionState({...sessionState, user:newUser});
-            localStorage.setItem('user',newUser);
+            localStorage.setItem('user',JSON.stringify(newUser));
         }
     };
 

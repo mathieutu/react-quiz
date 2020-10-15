@@ -1,4 +1,4 @@
 export type Response = {
-    question_id:string,
+    questionId:string,
     responses:Array<string>
 }

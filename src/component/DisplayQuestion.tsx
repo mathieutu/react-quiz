@@ -6,6 +6,7 @@ import {Response} from "../type/Response";
 type Props = {
     question:Question,
     handleNext(response:Response) :void,
+    loading:boolean
 }
 
 export default function DisplayQuestion(props:Props){
@@ -44,8 +45,12 @@ export default function DisplayQuestion(props:Props){
             <div className="text-xl">{props.question.content}</div><hr className="my-2"/>
             {answers}
             <div className="flex mt-6">
-                <div onClick={() => {props.handleNext({question_id:props.question.id,responses:userResponse})}}
-                     className="my-btn-anim hover:bg-white hover:text-blue-600 text-white border border-blue-400 bg-blue-400 px-3 py-1 mx-2 cursor-pointer select-none rounded transition duration-150">Suivant</div>
+                {props.loading ? (
+                    <div className="text-white border bg-gray-600 px-3 py-1 mx-2 cursor-pointer select-none rounded opacity-75">Traitement ...</div>
+                ) : (
+                    <div onClick={() => {props.handleNext({questionId:props.question.id,responses:userResponse})}}
+                         className="my-btn-anim hover:bg-white hover:text-blue-600 text-white border border-blue-400 bg-blue-400 px-3 py-1 mx-2 cursor-pointer select-none rounded transition duration-150">Suivant</div>
+                )}
             </div>
         </div>
     );
