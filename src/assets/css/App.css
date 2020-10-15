@@ -3,7 +3,7 @@ body{
 }
 
 .my-btn-anim:active{
-    transform: scale(0.95);
+    transform: scale(0.97);
 }
 
 .my-btn-anim-disabled{
