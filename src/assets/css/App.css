@@ -1,3 +1,7 @@
+body{
+    background-color: #edf2f7;
+}
+
 .form-btn:active{
     transform: scale(0.95);
 }

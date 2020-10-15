@@ -28,7 +28,7 @@ export default function DisplayQuestion(props:Props){
 
     return(
         <div>
-            {props.question.content}
+            <div className="text-xl">{props.question.content}</div>
             {props.question.answers.map((answer) =>{
                 return (
                     <div key={props.question.id + '-' + answer.key}>
@@ -38,7 +38,8 @@ export default function DisplayQuestion(props:Props){
                 );
             })}
             <div className="flex">
-                <div onClick={() => {props.handleNext({question_id:props.question.id,responses:userResponse})}} className="form-btn hover:bg-white hover:text-blue-600 border border-blue-400 bg-blue-400 px-3 py-1 mx-2 cursor-pointer select-none rounded transition duration-150">Suivant</div>
+                <div onClick={() => {props.handleNext({question_id:props.question.id,responses:userResponse})}}
+                     className="form-btn hover:bg-white hover:text-blue-600 text-white border border-blue-400 bg-blue-400 px-3 py-1 mx-2 cursor-pointer select-none rounded transition duration-150">Suivant</div>
             </div>
         </div>
     );
