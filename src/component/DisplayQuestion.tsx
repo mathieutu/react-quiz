@@ -1,26 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {Question} from "../type/Question";
 import {removeFromArray} from "../functions";
+import {Response} from "../type/Response";
 
 type Props = {
     question:Question,
-    handleNext() :void,
+    handleNext(response:Response) :void,
 }
 
 export default function DisplayQuestion(props:Props){
-    const [responses,setResponses] = useState<Array<string>>([]);
+    const [userResponse,setUserResponse] = useState<Array<string>>([]);
 
-    useEffect(() => {console.log(responses)},[responses])
+    useEffect(() => {
+        setUserResponse([]);
+    },[props.question])
 
     const handleResponseChange = (e:any) => {
         const value:string = e.currentTarget.value;
-        let newResponses = responses;
+        let newResponses = userResponse;
         if(!newResponses.includes(value)){
             newResponses.push(value);
         }else{
             newResponses = removeFromArray(value,newResponses);
         }
-        setResponses(newResponses);
+        setUserResponse(newResponses);
     }
 
     return(
@@ -35,7 +38,7 @@ export default function DisplayQuestion(props:Props){
                 );
             })}
             <div className="flex">
-                <div onClick={() => {props.handleNext()}} className="form-btn hover:bg-white hover:text-blue-600 border border-blue-400 bg-blue-400 px-3 py-1 mx-2 cursor-pointer select-none rounded transition duration-150">Suivant</div>
+                <div onClick={() => {props.handleNext({question_id:props.question.id,responses:userResponse})}} className="form-btn hover:bg-white hover:text-blue-600 border border-blue-400 bg-blue-400 px-3 py-1 mx-2 cursor-pointer select-none rounded transition duration-150">Suivant</div>
             </div>
         </div>
     );

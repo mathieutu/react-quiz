@@ -2,11 +2,14 @@ import React, {useState} from 'react';
 import './assets/css/App.css';
 import {QCM} from "./Data";
 import DisplayQuestion from "./component/DisplayQuestion";
+import {Response} from "./type/Response";
 
 function App() {
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
 
-    const handleNext = () => {
+    const handleNext = (response:Response) => {
+        //TODO : request API send
+        console.log(response);
         setCurrentQuestionIndex(currentQuestionIndex + 1);
     };
   return (
