@@ -1,37 +1,61 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {sessionContext} from "../context/SessionContext";
 import { useHistory } from 'react-router';
 import Button from "../component/Button";
+import {useMutation} from "@apollo/client";
+import {CgSpinnerTwoAlt} from "react-icons/all";
+import {newUserQuery} from "../utils/queries";
+import {User} from "../type/User";
 
 export default function LoginPage(){
-    const [email, setEmail] = useState('');
-    const [name,setName] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [name,setName] = useState<string>('');
     const session = useContext(sessionContext);
     const history = useHistory();
+    const [formError, setFormError] = useState<string|null>(null);
+    const [addUser, { loading }] = useMutation(newUserQuery());
 
     const handleSubmit = (e:any) => {
         e.preventDefault();
         const form = document.querySelector('form');
         if(session !== undefined && form !== undefined && form !== null && form.reportValidity()){
-            //TODO : API to add user then log in
-            session.updateSession('user',JSON.stringify({email:email,name:name,id:'fdhsgfdgd56454df'}));
-            history.push('/');
+            if(!checkLoginForm()){
+                setFormError("Veuillez renseigner l'email ET le nom par des valeurs valides");
+            }else{
+                addUser({ variables: { email: email, name: name } }).then(({data})=>{
+                    const newUser:User = data.addUser;
+                    session.updateSession('user',JSON.stringify(newUser));
+                    history.push('/');
+                }).catch((e)=>{
+                    setFormError(e.message);
+                });
+            }
         }
+    };
+
+    const checkLoginForm = () => {
+        return email.length > 0 && email.includes('@') && name.length > 0
     };
 
     return (
         <div className="text-lg flex h-screen bg-white w-screen">
             <form id="login-form" onSubmit={handleSubmit} className="m-auto w-100 shadow-lg bg-gray-300 flex flex-col p-6">
-                <div className="my-6 w-full">
-                    <input type="email" required className="w-full focus:shadow-lg p-2 px-3 rounded" placeholder="Email" onChange={(e) => setEmail(e.currentTarget.value)}/>
+                {formError && <div className="my-3 text-red-900 bg-red-300 border border-red-600 rounded px-4 py-2">
+                    {'Une erreur est survenue : ' + formError}
+                </div>}
+                <div className="my-4 w-full">
+                    <label className="mb-2">Email <span className="text-red-800">*</span></label>
+                    <input type="email" required className="w-full focus:shadow-lg p-2 px-3 rounded" placeholder="exemple@domaine.com" onChange={(e) => setEmail(e.currentTarget.value)}/>
                 </div>
-                <div className="my-6 w-full">
-                    <input type="text" required className="w-full focus:shadow-lg p-2 px-3 rounded" placeholder="NOM Prénom" onChange={(e) => setName(e.currentTarget.value)}/>
+                <div className="my-4 w-full">
+                    <label className="mb-2">Nom et Prénom <span className="text-red-800">*</span></label>
+                    <input type="text" required className="w-full focus:shadow-lg p-2 px-3 rounded" placeholder="Jean Dupont" onChange={(e) => setName(e.currentTarget.value)}/>
                 </div>
                 <div className="mt-8 flex">
-                    <Button handleOnClick={handleSubmit} text={'Commencer'} icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>}/>
+                    <Button handleOnClick={handleSubmit} text={loading ? 'Chargement' : 'Commencer'}
+                            icon={loading ? <CgSpinnerTwoAlt className="ml-2 animate-spin"/> : <FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>}/>
                 </div>
             </form>
         </div>

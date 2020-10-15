@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Question} from "../type/Question";
 import {removeFromArray} from "../functions";
 import {Response} from "../type/Response";
-import { FaRegSquare, FaRegCheckSquare } from 'react-icons/fa';
 
 type Props = {
     question:Question,
