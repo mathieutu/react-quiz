@@ -5,7 +5,8 @@ import {FORM_NOT_STARTED} from "../page/FormPage";
 interface SessionType {
     user:User|null,
     formStep:number,
-    formState:number
+    formState:number,
+    formTimer:number
 }
 
 interface SessionValue extends SessionType{
@@ -15,6 +16,7 @@ interface SessionValue extends SessionType{
 const sessionDefaultValues = {
     user: null,
     formStep: 0,
+    formTimer: 0,
     formState: FORM_NOT_STARTED,
 }
 
@@ -41,6 +43,9 @@ export default function ApplicationSession(props:any){
                 break;
             case 'formState':
                 handleFormState(value);
+                break;
+            case 'formTimer':
+                handleFormTimer(value);
                 break;
             case 'logout':
                 logout();
@@ -76,10 +81,18 @@ export default function ApplicationSession(props:any){
         }
     };
 
+    const handleFormTimer = (newFormTimer: number) => {
+        if(newFormTimer !== null){
+            setSessionState({...sessionState, formState:newFormTimer});
+            localStorage.setItem('formTimer',newFormTimer.toString());
+        }
+    };
+
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         const storedFormState = localStorage.getItem('formState');
         const storedFormStep = localStorage.getItem('formStep');
+        const storedFormTimer = localStorage.getItem('formTimer');
         let newSessionState = sessionState;
         if(storedUser !== null){
             newSessionState = {...newSessionState,user:JSON.parse(storedUser)};
@@ -89,6 +102,9 @@ export default function ApplicationSession(props:any){
         }
         if(storedFormStep !== null){
             newSessionState = {...newSessionState,formStep:JSON.parse(storedFormStep)};
+        }
+        if(storedFormTimer !== null){
+            newSessionState = {...newSessionState,formTimer:JSON.parse(storedFormTimer)};
         }
         setSessionState(newSessionState);
     },[]);

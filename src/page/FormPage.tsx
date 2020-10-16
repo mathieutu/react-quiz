@@ -18,7 +18,7 @@ export const FORM_TIMED_OUT:number = 3;
 export default function FormPage(){
     const session = useSession();
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
-    const [currentTimer,setCurrentTimer] = useState<number>(0);
+    const [currentTimer,setCurrentTimer] = useState<number>(session.formTimer ?? 0);
     const [formState,setFormState] = useState<number>(FORM_PROCESSING);
     const [error,setError] = useState<string|null>(null);
     const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY);
@@ -39,6 +39,7 @@ export default function FormPage(){
         const timeInterval = setInterval(()=>{
             setCurrentTimer((prevState) => {
                 if((prevState + 1) <= QCM_TIME){
+                    localStorage.setItem('formTimer',(prevState + 1).toString() );
                     return prevState + 1;
                 }
                 clearInterval(timeInterval);
