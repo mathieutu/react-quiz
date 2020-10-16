@@ -27,12 +27,6 @@ const sessionDefaultValues = {
     formState: FORM_NOT_STARTED,
 }
 
-/*const sessionDefaultValues:SessionType = {
-    user: (storedUser !== null ? JSON.parse(storedUser) : null),
-    formStep: (storedFormStep !== null ? JSON.parse(storedFormStep) : 0),
-    formState: (storedFormState !== null ? JSON.parse(storedFormState) : FORM_NOT_STARTED),
-};*/
-
 export const sessionContext = React.createContext<SessionValue|undefined>(undefined);
 
 export const useSession = () => {
