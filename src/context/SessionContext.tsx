@@ -2,24 +2,15 @@ import React, {useContext, useEffect, useState} from "react";
 import {User} from "../type/User";
 import {FORM_NOT_STARTED} from "../page/FormPage";
 
-type SessionType = {
+interface SessionType {
     user:User|null,
     formStep:number,
     formState:number
 }
 
-type SessionValue = {
-    user:User|null,
-    formStep:number,
-    formState:number,
+interface SessionValue extends SessionType{
     updateSession(type:string,value?:any):void
 }
-
-const storedUser = localStorage.getItem('user');
-const storedFormState = localStorage.getItem('formState');
-const storedFormStep = localStorage.getItem('formStep');
-
-console.log(storedUser,storedFormState,storedFormStep);
 
 const sessionDefaultValues = {
     user: null,

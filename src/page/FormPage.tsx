@@ -10,10 +10,10 @@ import {NEW_ANSWER_QUERY} from "../utils/queries";
 import ErrorDiv from "../component/ErrorDiv";
 import ProgressBar from "../component/ProgressBar";
 
-export const FORM_NOT_STARTED = 0;
-export const FORM_PROCESSING = 1;
-export const FORM_ENDED = 2;
-export const FORM_TIMED_OUT = 3;
+export const FORM_NOT_STARTED:number = 0;
+export const FORM_PROCESSING:number = 1;
+export const FORM_ENDED:number = 2;
+export const FORM_TIMED_OUT:number = 3;
 
 export default function FormPage(){
     const session = useSession();
