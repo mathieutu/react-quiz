@@ -46,6 +46,8 @@ export default function FormPage(){
                 return prevState;
             });
         },1000);
+
+        return () => { clearInterval(timeInterval); }
     },[]);
 
     useEffect(() => {

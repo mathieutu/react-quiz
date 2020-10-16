@@ -34,6 +34,14 @@ export default function ApplicationSession(props:any){
     const [sessionState, setSessionState] = useState<SessionType>(sessionDefaultValues);
 
     const handleUpdateSession = (type:string,value?:any) => {
+       /* const obj = {
+            user:handleUser,
+            formStep:handleFormStep,
+            formState:handleFormState,
+            formTimer:handleFormTimer,
+            logout,
+        };
+        obj[type](value);*/
         switch(type){
             case 'user':
                 handleUser(value);

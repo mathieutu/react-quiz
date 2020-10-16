@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {FormEvent, useContext, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {sessionContext} from "../context/SessionContext";
@@ -18,15 +18,15 @@ export default function LoginPage(){
     const [formError, setFormError] = useState<string|null>(null);
     const [addUser, { loading }] = useMutation(NEW_USER_QUERY);
 
-    const handleSubmit = (e:any) => {
+    const handleSubmit = (e:FormEvent) => {
         e.preventDefault();
-        const form = document.querySelector('form');
-        if(session !== undefined && form !== undefined && form !== null && form.reportValidity()){
+
+        if(session !== undefined){
             if(!checkLoginForm()){
                 setFormError("Veuillez renseigner l'email ET le nom par des valeurs valides");
             }else{
-                addUser({ variables: { email: email, name: name } }).then(({data})=>{
-                    const newUser:User = data.addUser;
+                addUser({ variables: { email, name } }).then(({ data })=>{
+                    const newUser: User = data.addUser;
                     session.updateSession('user',newUser);
                     history.push('/');
                 }).catch((e)=>{
@@ -42,7 +42,7 @@ export default function LoginPage(){
 
     return (
         <div className="text-lg flex h-screen bg-white w-screen">
-            <form id="login-form" onSubmit={handleSubmit} className="m-auto w-100 shadow-lg bg-gray-300 flex flex-col p-6">
+            <form onSubmit={handleSubmit} className="m-auto w-100 shadow-lg bg-gray-300 flex flex-col p-6">
                 {formError && <ErrorDiv text={formError}/>}
                 <div className="my-4 w-full">
                     <label className="mb-2">Email <span className="text-red-800">*</span></label>
@@ -53,7 +53,7 @@ export default function LoginPage(){
                     <input type="text" required className="w-full focus:shadow-lg p-2 px-3 rounded" placeholder="Jean Dupont" onChange={(e) => setName(e.currentTarget.value)}/>
                 </div>
                 <div className="mt-8 flex">
-                    <Button handleOnClick={handleSubmit} text={loading ? 'Chargement' : 'Commencer'}
+                    <Button text={loading ? 'Chargement' : 'Commencer'}
                             icon={loading ? <CgSpinnerTwoAlt className="ml-2 animate-spin"/> : <FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>}/>
                 </div>
             </form>
