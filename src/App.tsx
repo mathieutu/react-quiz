@@ -15,8 +15,8 @@ const client = new ApolloClient({
 });
 
 function App() {
-    const {user} = useSession();
-
+    const {user,formState} = useSession();
+    console.log(formState);
     return (
         <ApolloProvider client={client}>
             <BrowserRouter>

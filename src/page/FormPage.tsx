@@ -9,17 +9,21 @@ import {useMutation} from "@apollo/client";
 import {NEW_ANSWER_QUERY} from "../utils/queries";
 import ErrorDiv from "../component/ErrorDiv";
 
+export const FORM_NOT_STARTED = 0;
+export const FORM_PROCESSING = 1;
+export const FORM_ENDED = 2;
+export const FORM_TIMED_OUT = 3;
+
 export default function FormPage(){
+    const session = useSession();
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
     const [currentTimer,setCurrentTimer] = useState<number>(0);
-    const [formFullyEnded,setFormFullyEnded] = useState<boolean>(false);
+    const [formState,setFormState] = useState<number>(FORM_PROCESSING);
     const [error,setError] = useState<string|null>(null);
-    const session = useSession();
     const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY);
 
     const handleNext = (userResponse:Response) => {
         addAnswer({ variables: { answer: JSON.stringify(userResponse.responses), questionId: userResponse.questionId, userId:session.user!.id } }).then(({data}) =>{
-            session.updateSession('formStep',currentQuestionIndex + 1);
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         }).catch((e) => {
             console.log(e);
@@ -43,20 +47,26 @@ export default function FormPage(){
     },[]);
 
     useEffect(() => {
-        if(currentTimer >= QCM_TIME){
+        if(currentTimer >= QCM_TIME && formState === FORM_PROCESSING){
+            setFormState(FORM_TIMED_OUT);
             setCurrentQuestionIndex(QCM.length+1);
         }
     },[currentTimer]);
 
     useEffect(() => {
+        session.updateSession('formStep',currentQuestionIndex);
         if(currentQuestionIndex === QCM.length){
-            setFormFullyEnded(true);
+            setFormState(FORM_ENDED);
         }
-    },[currentQuestionIndex])
+    },[currentQuestionIndex]);
+
+    useEffect(()=>{
+        session.updateSession('formState',formState);
+    },[formState])
 
     return (
         <div className="m-10 w-full">
-            {QCM[currentQuestionIndex] !== undefined ? (
+            {(formState !== FORM_ENDED && formState !== FORM_TIMED_OUT) && QCM[currentQuestionIndex] !== undefined ? (
                 <>
                     <div className="w-full text-center">
                         <progress className="w-64" max={QCM_TIME} value={currentTimer}>{currentTimer}</progress>
@@ -69,7 +79,7 @@ export default function FormPage(){
                     {error && <ErrorDiv text={error}/>}
                 </>
             ) : (
-                <EndPage isTimeOut={!formFullyEnded}/>
+                <EndPage/>
             )}
         </div>
     );

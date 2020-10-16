@@ -1,23 +1,23 @@
 import React from 'react';
 import {useSession} from "../context/SessionContext";
 import Button from "../component/Button";
+import {FORM_TIMED_OUT} from "./FormPage";
+import {useHistory} from 'react-router';
 
-type Props = {
-    isTimeOut:boolean
-};
-
-export default function EndPage(props:Props){
+export default function EndPage(){
     const session = useSession();
+    const history = useHistory();
 
     const handleQuit = () => {
         session.updateSession('logout');
+        history.push('/');
     };
 
     return (
         <div className="mx-16 my-10 text-lg flex flex-col">
             <div className="text-2xl text-center">
                 {
-                    props.isTimeOut ? 'Le temps est écoulé, les réponses envoyées ont bien été enregistrées.'
+                    session.formState === FORM_TIMED_OUT ? 'Le temps est écoulé, les réponses envoyées ont bien été enregistrées.'
                         : 'Merci, les réponses ont été enregistrées :)'
                 }
             </div>

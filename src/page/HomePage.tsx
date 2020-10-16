@@ -5,18 +5,19 @@ import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useHistory} from 'react-router';
 import {useSession} from "../context/SessionContext";
 import Button from "../component/Button";
+import {FORM_NOT_STARTED, FORM_PROCESSING} from "./FormPage";
 
 export default function HomePage(){
     const history = useHistory();
     const session = useSession();
 
     const handleClick = () => {
-        session.updateSession('isFormStarted',true);
+        session.updateSession('formState',FORM_PROCESSING);
         history.push('/form');
     };
 
     useEffect(() => {
-        if(session.isFormStarted){
+        if(session.formState !== FORM_NOT_STARTED){
             history.push('/form');
         }
     },[]);

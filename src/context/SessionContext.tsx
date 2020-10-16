@@ -1,24 +1,37 @@
 import React, {useContext, useEffect, useState} from "react";
 import {User} from "../type/User";
+import {FORM_NOT_STARTED} from "../page/FormPage";
 
 type SessionType = {
     user:User|null,
     formStep:number,
-    isFormStarted:boolean
+    formState:number
 }
 
 type SessionValue = {
     user:User|null,
     formStep:number,
-    isFormStarted:boolean,
+    formState:number,
     updateSession(type:string,value?:any):void
 }
 
-const sessionDefaultValues:SessionType = {
+const storedUser = localStorage.getItem('user');
+const storedFormState = localStorage.getItem('formState');
+const storedFormStep = localStorage.getItem('formStep');
+
+console.log(storedUser,storedFormState,storedFormStep);
+
+const sessionDefaultValues = {
     user: null,
-    formStep:0,
-    isFormStarted:false,
-};
+    formStep: 0,
+    formState: FORM_NOT_STARTED,
+}
+
+/*const sessionDefaultValues:SessionType = {
+    user: (storedUser !== null ? JSON.parse(storedUser) : null),
+    formStep: (storedFormStep !== null ? JSON.parse(storedFormStep) : 0),
+    formState: (storedFormState !== null ? JSON.parse(storedFormState) : FORM_NOT_STARTED),
+};*/
 
 export const sessionContext = React.createContext<SessionValue|undefined>(undefined);
 
@@ -41,8 +54,8 @@ export default function ApplicationSession(props:any){
             case 'formStep':
                 handleFormStep(value);
                 break;
-            case 'isFormStarted':
-                handleIsFormStarted(value);
+            case 'formState':
+                handleFormState(value);
                 break;
             case 'logout':
                 logout();
@@ -71,23 +84,23 @@ export default function ApplicationSession(props:any){
         }
     };
 
-    const handleIsFormStarted = (newIsStarted:boolean) => {
-        if(newIsStarted !== null){
-            setSessionState({...sessionState, isFormStarted:newIsStarted});
-            localStorage.setItem('isFormStarted',(newIsStarted ? 'true' : 'false'));
+    const handleFormState = (newFormState:number) => {
+        if(newFormState !== null){
+            setSessionState({...sessionState, formState:newFormState});
+            localStorage.setItem('formState',newFormState.toString());
         }
     };
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
-        const storedIsFormStarted = localStorage.getItem('isFormStarted');
+        const storedFormState = localStorage.getItem('formState');
         const storedFormStep = localStorage.getItem('formStep');
         let newSessionState = sessionState;
         if(storedUser !== null){
             newSessionState = {...newSessionState,user:JSON.parse(storedUser)};
         }
-        if(storedIsFormStarted !== null){
-            newSessionState = {...newSessionState,isFormStarted:JSON.parse(storedIsFormStarted)};
+        if(storedFormState !== null){
+            newSessionState = {...newSessionState,formState:JSON.parse(storedFormState)};
         }
         if(storedFormStep !== null){
             newSessionState = {...newSessionState,formStep:JSON.parse(storedFormStep)};
