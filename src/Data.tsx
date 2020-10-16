@@ -1,7 +1,7 @@
 import React from 'react';
 import {Question} from "./type/Question";
 
-export const QCM_TIME = 10;
+export const QCM_TIME = 1500;
 
 export const QCM:Array<Question> = [
     {

@@ -10,3 +10,14 @@ body{
     background-color: dimgrey;
     opacity: 0.75;
 }
+
+::-webkit-progress-bar {
+    background-color: #e2e8f0;
+}
+
+::-webkit-progress-value {
+    background-color: #639fe0;
+}
+::-moz-progress-bar{
+    background-color: #639fe0;
+}

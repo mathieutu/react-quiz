@@ -69,7 +69,7 @@ export default function FormPage(){
             {(formState !== FORM_ENDED && formState !== FORM_TIMED_OUT) && QCM[currentQuestionIndex] !== undefined ? (
                 <>
                     <div className="w-full text-center">
-                        <progress className="w-64" max={QCM_TIME} value={currentTimer}>{currentTimer}</progress>
+                        <progress className="w-64 bg-gray-300 appearance-none" max={QCM_TIME} value={currentTimer}>{currentTimer}</progress>
                     </div>
                     <div className="text-right italic text-lg flex justify-end">
                         <div className='my-auto'>Question {currentQuestionIndex + 1}/{QCM.length}</div>
