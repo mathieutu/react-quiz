@@ -1,6 +1,8 @@
 import React from 'react';
 import {Question} from "./type/Question";
 
+export const QCM_TIME = 20;
+
 export const QCM:Array<Question> = [
     {
         id:'question-1',
