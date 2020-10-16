@@ -7,9 +7,11 @@ module.exports = {
             },
             width:{
                 '100':'30rem'
-            }
+            },
         },
     },
-    variants: {},
+    variants: {
+        borderRadius: ['responsive', 'hover', 'focus'],
+    },
     plugins: [],
 };
