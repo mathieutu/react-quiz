@@ -8,6 +8,7 @@ import {RiPushpin2Fill} from "react-icons/all";
 import {useMutation} from "@apollo/client";
 import {NEW_ANSWER_QUERY} from "../utils/queries";
 import ErrorDiv from "../component/ErrorDiv";
+import ProgressBar from "../component/ProgressBar";
 
 export const FORM_NOT_STARTED = 0;
 export const FORM_PROCESSING = 1;
@@ -68,9 +69,7 @@ export default function FormPage(){
         <div className="m-10 w-full">
             {(formState !== FORM_ENDED && formState !== FORM_TIMED_OUT) && QCM[currentQuestionIndex] !== undefined ? (
                 <>
-                    <div className="w-full text-center">
-                        <progress className="w-64 bg-gray-300 appearance-none" max={QCM_TIME} value={currentTimer}>{currentTimer}</progress>
-                    </div>
+                    <ProgressBar max={QCM_TIME} currentValue={currentTimer}/>
                     <div className="text-right italic text-lg flex justify-end">
                         <div className='my-auto'>Question {currentQuestionIndex + 1}/{QCM.length}</div>
                         <RiPushpin2Fill className="my-auto ml-2"/>
