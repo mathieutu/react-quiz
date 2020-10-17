@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
 import {User} from "../type/User";
 import {FORM_STATE} from "../page/FormPage";
 
@@ -11,7 +11,7 @@ interface SessionStateType {
 
 interface SessionValue{
     state: SessionStateType,
-    update(value: SessionStateType): void,
+    update: Dispatch<SetStateAction<SessionStateType>>,
     logout(): void
 }
 
@@ -35,11 +35,6 @@ export const useSession = () => {
 export default function AppSessionProvider(props: any){
     const [sessionState, setSessionState] = useState<SessionStateType>(sessionStateDefaultValues);
 
-    const handleUpdateSession = (value:SessionStateType) => {
-        localStorage.setItem('state',JSON.stringify(value));
-        setSessionState(value);
-    };
-
     const handleLogout = () => {
         localStorage.clear();
         setSessionState(sessionStateDefaultValues);
@@ -52,8 +47,12 @@ export default function AppSessionProvider(props: any){
         }
     },[]);
 
+    useEffect(() => {
+        localStorage.setItem('state',JSON.stringify(sessionState));
+    }, [sessionState]);
+
     return (
-        <sessionContext.Provider value={{state:sessionState, update: handleUpdateSession, logout:handleLogout}}>
+        <sessionContext.Provider value={{state:sessionState, update: setSessionState, logout:handleLogout}}>
             {props.children}
         </sessionContext.Provider>
     );

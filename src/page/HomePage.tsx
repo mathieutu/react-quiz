@@ -12,7 +12,7 @@ export default function HomePage(){
     const session = useSession();
 
     const handleClick = () => {
-        session.update({...session.state, formState : FORM_STATE.PROCESSING});
+        session.update((prevState => {return {...prevState, formState : FORM_STATE.PROCESSING}}));
         history.push('/form');
     };
 

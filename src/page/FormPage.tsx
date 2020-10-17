@@ -39,13 +39,13 @@ export default function FormPage(){
             setCurrentQuestionIndex(session.state.formStep);
         }
         const timeInterval = setInterval(()=>{
-            setCurrentTimer((prevState) => {
-                if((prevState + 1) <= QCM_TIME){
-                    localStorage.setItem('formTimer', (prevState + 1).toString() );
-                    return prevState + 1;
+            setCurrentTimer((prevTimerState) => {
+                if((prevTimerState + 1) <= QCM_TIME){
+                    session.update((prevState => {return {...prevState, formTimer: (prevTimerState + 1)}}));
+                    return prevTimerState + 1;
                 }
                 clearInterval(timeInterval);
-                return prevState;
+                return prevTimerState;
             });
         },1000);
 
@@ -60,14 +60,14 @@ export default function FormPage(){
     },[currentTimer]);
 
     useEffect(() => {
-        session.update({...session.state,formStep:currentQuestionIndex});
+        session.update((prevState => {return {...prevState, formStep:currentQuestionIndex}}));
         if(currentQuestionIndex === QCM.length){
             setFormState(FORM_STATE.ENDED);
         }
     },[currentQuestionIndex]);
 
     useEffect(()=>{
-        session.update({...session.state,formState});
+        session.update((prevState => {return {...prevState,formState}}));
     },[formState]);
 
     return (

@@ -9,6 +9,7 @@ import {CgSpinnerTwoAlt} from "react-icons/all";
 import {NEW_USER_QUERY} from "../utils/queries";
 import {User} from "../type/User";
 import ErrorDiv from "../component/ErrorDiv";
+import {FORM_STATE} from "./FormPage";
 
 export default function LoginPage(){
     const [email, setEmail] = useState<string>('');
@@ -27,7 +28,7 @@ export default function LoginPage(){
             }else{
                 addUser({ variables: { email, name } }).then(({ data })=>{
                     const newUser: User = data.addUser;
-                    session.update({...session.state,user:newUser});
+                    session.update((prevState => {return {...prevState, user : newUser }}));
                     history.push('/');
                 }).catch((e)=>{
                     setFormError(e.message);
