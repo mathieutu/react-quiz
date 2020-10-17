@@ -1,26 +1,28 @@
 import React, {useContext, useEffect, useState} from "react";
 import {User} from "../type/User";
-import {FORM_NOT_STARTED} from "../page/FormPage";
+import {FORM_STATE} from "../page/FormPage";
 
-interface SessionType {
-    user:User|null,
-    formStep:number,
-    formState:number,
-    formTimer:number
+interface SessionStateType {
+    user: User | null,
+    formStep: number,
+    formState: number,
+    formTimer: number
 }
 
-interface SessionValue extends SessionType{
-    updateSession(type:string,value?:any):void
+interface SessionValue{
+    state: SessionStateType,
+    update(value: SessionStateType): void,
+    logout(): void
 }
 
-const sessionDefaultValues = {
+const sessionStateDefaultValues: SessionStateType = {
     user: null,
     formStep: 0,
     formTimer: 0,
-    formState: FORM_NOT_STARTED,
-}
+    formState: FORM_STATE.NOT_STARTED,
+};
 
-export const sessionContext = React.createContext<SessionValue|undefined>(undefined);
+export const sessionContext = React.createContext<SessionValue | undefined>(undefined);
 
 export const useSession = () => {
     const context = useContext(sessionContext);
@@ -30,95 +32,28 @@ export const useSession = () => {
     return context;
 };
 
-export default function ApplicationSession(props:any){
-    const [sessionState, setSessionState] = useState<SessionType>(sessionDefaultValues);
+export default function AppSessionProvider(props: any){
+    const [sessionState, setSessionState] = useState<SessionStateType>(sessionStateDefaultValues);
 
-    const handleUpdateSession = (type:string,value?:any) => {
-       /* const obj = {
-            user:handleUser,
-            formStep:handleFormStep,
-            formState:handleFormState,
-            formTimer:handleFormTimer,
-            logout,
-        };
-        obj[type](value);*/
-        switch(type){
-            case 'user':
-                handleUser(value);
-                break;
-            case 'formStep':
-                handleFormStep(value);
-                break;
-            case 'formState':
-                handleFormState(value);
-                break;
-            case 'formTimer':
-                handleFormTimer(value);
-                break;
-            case 'logout':
-                logout();
-                break;
-            default:
-                break;
-        }
+    const handleUpdateSession = (value:SessionStateType) => {
+        localStorage.setItem('state',JSON.stringify(value));
+        setSessionState(value);
     };
 
-    const logout = () => {
+    const handleLogout = () => {
         localStorage.clear();
-        setSessionState(sessionDefaultValues);
-    };
-
-    const handleFormStep = (newFormStep:number) => {
-        if(newFormStep > sessionState.formStep){
-            setSessionState({...sessionState, formStep:newFormStep});
-            localStorage.setItem('formStep',newFormStep.toString());
-        }
-    };
-
-    const handleUser = (newUser:User) => {
-        if(newUser !== null){
-            setSessionState({...sessionState, user:newUser});
-            localStorage.setItem('user',JSON.stringify(newUser));
-        }
-    };
-
-    const handleFormState = (newFormState:number) => {
-        if(newFormState !== null){
-            setSessionState({...sessionState, formState:newFormState});
-            localStorage.setItem('formState',newFormState.toString());
-        }
-    };
-
-    const handleFormTimer = (newFormTimer: number) => {
-        if(newFormTimer !== null){
-            setSessionState({...sessionState, formState:newFormTimer});
-            localStorage.setItem('formTimer',newFormTimer.toString());
-        }
+        setSessionState(sessionStateDefaultValues);
     };
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        const storedFormState = localStorage.getItem('formState');
-        const storedFormStep = localStorage.getItem('formStep');
-        const storedFormTimer = localStorage.getItem('formTimer');
-        let newSessionState = sessionState;
-        if(storedUser !== null){
-            newSessionState = {...newSessionState,user:JSON.parse(storedUser)};
+        const storedState = localStorage.getItem('state');
+        if(storedState !== null){
+            setSessionState(JSON.parse(storedState));
         }
-        if(storedFormState !== null){
-            newSessionState = {...newSessionState,formState:JSON.parse(storedFormState)};
-        }
-        if(storedFormStep !== null){
-            newSessionState = {...newSessionState,formStep:JSON.parse(storedFormStep)};
-        }
-        if(storedFormTimer !== null){
-            newSessionState = {...newSessionState,formTimer:JSON.parse(storedFormTimer)};
-        }
-        setSessionState(newSessionState);
     },[]);
 
     return (
-        <sessionContext.Provider value={{...sessionState,updateSession:handleUpdateSession}}>
+        <sessionContext.Provider value={{state:sessionState, update: handleUpdateSession, logout:handleLogout}}>
             {props.children}
         </sessionContext.Provider>
     );

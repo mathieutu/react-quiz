@@ -15,11 +15,11 @@ const client = new ApolloClient({
 });
 
 function App() {
-    const {user} = useSession();
+    const {state} = useSession();
     return (
         <ApolloProvider client={client}>
             <BrowserRouter>
-                {user === null ? (
+                {state.user === null ? (
                     <LoginPage/>
                 ) : (
                     <>

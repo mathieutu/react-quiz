@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSession} from "../context/SessionContext";
 import Button from "../component/Button";
-import {FORM_TIMED_OUT} from "./FormPage";
+import {FORM_STATE} from "./FormPage";
 import {useHistory} from 'react-router';
 
 export default function EndPage(){
@@ -9,7 +9,7 @@ export default function EndPage(){
     const history = useHistory();
 
     const handleQuit = () => {
-        session.updateSession('logout');
+        session.logout();
         history.push('/');
     };
 
@@ -17,7 +17,7 @@ export default function EndPage(){
         <div className="mx-16 my-10 text-lg flex flex-col">
             <div className="text-2xl text-center">
                 {
-                    session.formState === FORM_TIMED_OUT ? 'Le temps est écoulé, les réponses envoyées ont bien été enregistrées.'
+                    session.state.formState === FORM_STATE.TIMED_OUT ? 'Le temps est écoulé, les réponses envoyées ont bien été enregistrées.'
                         : 'Merci, les réponses ont été enregistrées :)'
                 }
             </div>

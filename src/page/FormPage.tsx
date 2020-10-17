@@ -10,21 +10,23 @@ import {NEW_ANSWER_QUERY} from "../utils/queries";
 import ErrorDiv from "../component/ErrorDiv";
 import ProgressBar from "../component/ProgressBar";
 
-export const FORM_NOT_STARTED:number = 0;
-export const FORM_PROCESSING:number = 1;
-export const FORM_ENDED:number = 2;
-export const FORM_TIMED_OUT:number = 3;
+export enum FORM_STATE {
+    NOT_STARTED,
+    PROCESSING,
+    ENDED,
+    TIMED_OUT
+}
 
 export default function FormPage(){
     const session = useSession();
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
-    const [currentTimer,setCurrentTimer] = useState<number>(session.formTimer ?? 0);
-    const [formState,setFormState] = useState<number>(FORM_PROCESSING);
+    const [currentTimer,setCurrentTimer] = useState<number>(session.state.formTimer ? session.state.formTimer : 0);
+    const [formState,setFormState] = useState<number>(FORM_STATE.PROCESSING);
     const [error,setError] = useState<string|null>(null);
     const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY);
 
     const handleNext = (userResponse:Response) => {
-        addAnswer({ variables: { answer: JSON.stringify(userResponse.responses), questionId: userResponse.questionId, userId:session.user!.id } }).then(({data}) =>{
+        addAnswer({ variables: { answer: JSON.stringify(userResponse.responses), questionId: userResponse.questionId, userId:session.state.user!.id } }).then(({data}) =>{
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         }).catch((e) => {
             console.log(e);
@@ -33,13 +35,13 @@ export default function FormPage(){
     };
 
     useEffect(() => {
-        if(session.formStep !== undefined){
-            setCurrentQuestionIndex(session.formStep);
+        if(session.state.formStep !== undefined){
+            setCurrentQuestionIndex(session.state.formStep);
         }
         const timeInterval = setInterval(()=>{
             setCurrentTimer((prevState) => {
                 if((prevState + 1) <= QCM_TIME){
-                    localStorage.setItem('formTimer',(prevState + 1).toString() );
+                    localStorage.setItem('formTimer', (prevState + 1).toString() );
                     return prevState + 1;
                 }
                 clearInterval(timeInterval);
@@ -51,26 +53,26 @@ export default function FormPage(){
     },[]);
 
     useEffect(() => {
-        if(currentTimer >= QCM_TIME && formState === FORM_PROCESSING){
-            setFormState(FORM_TIMED_OUT);
+        if(currentTimer >= QCM_TIME && formState === FORM_STATE.PROCESSING){
+            setFormState(FORM_STATE.TIMED_OUT);
             setCurrentQuestionIndex(QCM.length+1);
         }
     },[currentTimer]);
 
     useEffect(() => {
-        session.updateSession('formStep',currentQuestionIndex);
+        session.update({...session.state,formStep:currentQuestionIndex});
         if(currentQuestionIndex === QCM.length){
-            setFormState(FORM_ENDED);
+            setFormState(FORM_STATE.ENDED);
         }
     },[currentQuestionIndex]);
 
     useEffect(()=>{
-        session.updateSession('formState',formState);
-    },[formState])
+        session.update({...session.state,formState});
+    },[formState]);
 
     return (
         <div className="m-10 w-full">
-            {(formState !== FORM_ENDED && formState !== FORM_TIMED_OUT) && QCM[currentQuestionIndex] !== undefined ? (
+            {(formState !== FORM_STATE.ENDED && formState !== FORM_STATE.TIMED_OUT) && QCM[currentQuestionIndex] !== undefined ? (
                 <>
                     <ProgressBar max={QCM_TIME} currentValue={currentTimer}/>
                     <div className="text-right italic text-lg flex justify-end">

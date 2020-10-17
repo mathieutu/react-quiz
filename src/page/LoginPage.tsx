@@ -27,7 +27,7 @@ export default function LoginPage(){
             }else{
                 addUser({ variables: { email, name } }).then(({ data })=>{
                     const newUser: User = data.addUser;
-                    session.updateSession('user',newUser);
+                    session.update({...session.state,user:newUser});
                     history.push('/');
                 }).catch((e)=>{
                     setFormError(e.message);
