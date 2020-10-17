@@ -16,11 +16,9 @@ export default function HomePage(){
         history.push('/form');
     };
 
-    useEffect(() => {
-        if(session.state.formState !== FORM_STATE.NOT_STARTED){
-            history.push('/form');
-        }
-    },[]);
+    if(session.state.formState !== FORM_STATE.NOT_STARTED){
+        history.push('/form');
+    }
 
     return (
         <div className="flex h-full flex-col mx-24 my-16 text-lg">
@@ -35,7 +33,7 @@ export default function HomePage(){
                 </div>
             </div>
             <div className="mt-10 flex">
-                <Button handleOnClick={handleClick} text={"C'est parti !"} icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>}/>
+                <Button onClick={handleClick} text="C'est parti !" icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>}/>
             </div>
         </div>
     );

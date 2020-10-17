@@ -19,7 +19,7 @@ export enum FORM_STATE {
 
 export default function FormPage(){
     const session = useSession();
-    const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(0);
+    const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(session.state.formStep ? session.state.formStep : 0);
     const [currentTimer,setCurrentTimer] = useState<number>(session.state.formTimer ? session.state.formTimer : 0);
     const [formState,setFormState] = useState<number>(FORM_STATE.PROCESSING);
     const [error,setError] = useState<string|null>(null);
@@ -35,9 +35,6 @@ export default function FormPage(){
     };
 
     useEffect(() => {
-        if(session.state.formStep !== undefined){
-            setCurrentQuestionIndex(session.state.formStep);
-        }
         const timeInterval = setInterval(()=>{
             setCurrentTimer((prevTimerState) => {
                 if((prevTimerState + 1) <= QCM_TIME){
@@ -57,7 +54,7 @@ export default function FormPage(){
             setFormState(FORM_STATE.TIMED_OUT);
             setCurrentQuestionIndex(QCM.length+1);
         }
-    },[currentTimer]);
+    },[currentTimer,formState]);
 
     useEffect(() => {
         session.update((prevState => {return {...prevState, formStep:currentQuestionIndex}}));
@@ -79,7 +76,7 @@ export default function FormPage(){
                         <div className='my-auto'>Question {currentQuestionIndex + 1}/{QCM.length}</div>
                         <RiPushpin2Fill className="my-auto ml-2"/>
                     </div>
-                    <DisplayQuestion question={QCM[currentQuestionIndex]} loading={loading} handleNext={handleNext}/>
+                    <DisplayQuestion question={QCM[currentQuestionIndex]} loading={loading} onNext={handleNext}/>
                     {error && <ErrorDiv text={error}/>}
                 </>
             ) : (

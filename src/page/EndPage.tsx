@@ -22,7 +22,7 @@ export default function EndPage(){
                 }
             </div>
             <div className="mt-10 text-lg text-center">
-                <Button handleOnClick={handleQuit} text={'Bye bye'}/>
+                <Button onClick={handleQuit} text='Bye bye'/>
             </div>
         </div>
     );

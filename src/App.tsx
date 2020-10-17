@@ -28,7 +28,7 @@ function App() {
                             <Switch>
                                 <Route exact path="/"><HomePage/></Route>
                                 <Route exact path="/form"><FormPage/></Route>
-                                <Route><ErrorPage code={404} message={"Not Found"}/></Route>
+                                <Route><ErrorPage code={404} message="Not Found"/></Route>
                             </Switch>
                         </div>
                     </>

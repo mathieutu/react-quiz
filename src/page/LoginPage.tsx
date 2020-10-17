@@ -9,14 +9,13 @@ import {CgSpinnerTwoAlt} from "react-icons/all";
 import {NEW_USER_QUERY} from "../utils/queries";
 import {User} from "../type/User";
 import ErrorDiv from "../component/ErrorDiv";
-import {FORM_STATE} from "./FormPage";
 
 export default function LoginPage(){
     const [email, setEmail] = useState<string>('');
-    const [name,setName] = useState<string>('');
+    const [name, setName] = useState<string>('');
     const session = useContext(sessionContext);
     const history = useHistory();
-    const [formError, setFormError] = useState<string|null>(null);
+    const [formError, setFormError] = useState<string | null>(null);
     const [addUser, { loading }] = useMutation(NEW_USER_QUERY);
 
     const handleSubmit = (e:FormEvent) => {
