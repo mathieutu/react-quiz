@@ -47,7 +47,7 @@ export default function FormPage(){
         },1000);
 
         return () => { clearInterval(timeInterval); }
-    },[]);
+    },[session]);
 
     useEffect(() => {
         if(currentTimer >= QCM_TIME && formState === FORM_STATE.PROCESSING){
