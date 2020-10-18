@@ -19,12 +19,12 @@ export enum FORM_STATE {
 
 export default function FormPage(){
     const session = useSession();
-    const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(session.state.formStep ? session.state.formStep : 0);
-    const [formState,setFormState] = useState<number>(session.state.formState > FORM_STATE.PROCESSING ? session.state.formState : FORM_STATE.PROCESSING);
-    const [error,setError] = useState<string|null>(null);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(session.state.formStep ? session.state.formStep : 0);
+    const [formState, setFormState] = useState<number>(session.state.formState > FORM_STATE.PROCESSING ? session.state.formState : FORM_STATE.PROCESSING);
+    const [error, setError] = useState<string|null>(null);
     const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY);
 
-    const handleNext = (userResponse:Response) => {
+    const handleNext = (userResponse: Response) => {
         addAnswer({ variables: { answer: JSON.stringify(userResponse.responses), questionId: userResponse.questionId, userId:session.state.user!.id } }).then(({data}) =>{
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         }).catch((e) => {
@@ -41,14 +41,14 @@ export default function FormPage(){
     };
 
     useEffect(() => {
-        session.update((prevState => {return {...prevState, formStep:currentQuestionIndex}}));
+        session.update(( prevState => { return {...prevState, formStep:currentQuestionIndex} }));
         if(currentQuestionIndex === QCM.length){
             setFormState(FORM_STATE.ENDED);
         }
     },[currentQuestionIndex]);
 
     useEffect(()=>{
-        session.update((prevState => {return {...prevState,formState}}));
+        session.update((prevState => { return {...prevState,formState} }));
     },[formState]);
 
     return (
@@ -60,8 +60,8 @@ export default function FormPage(){
                         <div className='my-auto'>Question {currentQuestionIndex + 1}/{QCM.length}</div>
                         <RiPushpin2Fill className="my-auto ml-2"/>
                     </div>
-                    <DisplayQuestion question={QCM[currentQuestionIndex]} loading={loading} onNext={handleNext}/>
-                    {error && <ErrorDiv text={error}/>}
+                    <DisplayQuestion question={ QCM[currentQuestionIndex] } loading={ loading } onNext={ handleNext }/>
+                    {error ? <ErrorDiv text={ error }/> : null}
                 </>
             ) : (
                 <EndPage/>

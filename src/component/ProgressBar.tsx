@@ -1,8 +1,8 @@
 import React from 'react';
 
 type Props = {
-    max:number,
-    currentValue:number,
+    max: number,
+    currentValue: number,
 };
 
 const secondsToTime = (totalSeconds:number) => {
@@ -16,12 +16,12 @@ const secondsToTime = (totalSeconds:number) => {
     return result;
 };
 
-export default function ProgressBar(props:Props){
+export default function ProgressBar(props: Props){
     return (
         <div className="w-full flex">
             <div className="mx-auto flex">
-                <progress className="w-64 bg-gray-300 my-auto appearance-none" max={props.max} value={props.currentValue}>{props.currentValue}</progress>
-                <div className="my-auto mx-4 flex">{secondsToTime(props.max - props.currentValue)}</div>
+                <progress className="w-64 bg-gray-300 my-auto appearance-none" max={ props.max } value={ props.currentValue }>{ props.currentValue }</progress>
+                <div className="my-auto mx-4 flex">{ secondsToTime(props.max - props.currentValue) }</div>
             </div>
         </div>
     );

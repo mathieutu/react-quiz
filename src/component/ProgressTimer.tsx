@@ -9,13 +9,13 @@ type Props = {
 
 export default function ProgressTimer({ checkTimer }: Props){
     const session = useSession();
-    const [currentTimer,setCurrentTimer] = useState<number>(session.state.formTimer ? session.state.formTimer : 0);
+    const [currentTimer, setCurrentTimer] = useState<number>(session.state.formTimer ? session.state.formTimer : 0);
 
     useEffect(() => {
         const timeInterval = setInterval(()=>{
             setCurrentTimer((prevTimerState) => {
-                if((prevTimerState + 1) <= QCM_TIME){
-                    session.update((prevState => {return {...prevState, formTimer: (prevTimerState + 1)}}));
+                if( (prevTimerState + 1) <= QCM_TIME ){
+                    session.update(( prevState => { return {...prevState, formTimer: (prevTimerState + 1)} }));
                     return prevTimerState + 1;
                 }
                 clearInterval(timeInterval);
@@ -31,6 +31,6 @@ export default function ProgressTimer({ checkTimer }: Props){
     },[currentTimer, checkTimer]);
 
     return (
-        <ProgressBar max={QCM_TIME} currentValue={currentTimer}/>
+        <ProgressBar max={ QCM_TIME } currentValue={ currentTimer }/>
     );
 }

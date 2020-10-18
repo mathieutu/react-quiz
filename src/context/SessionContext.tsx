@@ -52,7 +52,7 @@ export default function AppSessionProvider(props: any){
     }, [sessionState]);
 
     return (
-        <sessionContext.Provider value={{state:sessionState, update: setSessionState, logout:handleLogout}}>
+        <sessionContext.Provider value={{state : sessionState, update : setSessionState, logout : handleLogout}}>
             {props.children}
         </sessionContext.Provider>
     );

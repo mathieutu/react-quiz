@@ -18,7 +18,7 @@ export default function LoginPage(){
     const [formError, setFormError] = useState<string | null>(null);
     const [addUser, { loading }] = useMutation(NEW_USER_QUERY);
 
-    const handleSubmit = (e:FormEvent) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         if(session !== undefined){
@@ -42,8 +42,8 @@ export default function LoginPage(){
 
     return (
         <div className="text-lg flex h-screen bg-white w-screen">
-            <form onSubmit={handleSubmit} className="m-auto w-100 shadow-lg bg-gray-300 flex flex-col p-6">
-                {formError && <ErrorDiv text={formError}/>}
+            <form onSubmit={ handleSubmit } className="m-auto w-100 shadow-lg bg-gray-300 flex flex-col p-6">
+                {formError ? <ErrorDiv text={ formError }/> : null}
                 <div className="my-4 w-full">
                     <label className="mb-2">Email <span className="text-red-800">*</span></label>
                     <input type="email" required className="w-full focus:shadow-lg p-2 px-3 rounded" placeholder="exemple@domaine.com" onChange={(e) => setEmail(e.currentTarget.value)}/>

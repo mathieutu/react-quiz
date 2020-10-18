@@ -12,7 +12,7 @@ export default function HomePage(){
     const session = useSession();
 
     const handleClick = () => {
-        session.update((prevState => {return {...prevState, formState : FORM_STATE.PROCESSING}}));
+        session.update(( prevState => { return {...prevState, formState : FORM_STATE.PROCESSING} } ));
         history.push('/form');
     };
 
@@ -33,7 +33,7 @@ export default function HomePage(){
                 </div>
             </div>
             <div className="mt-10 flex">
-                <Button onClick={handleClick} text="C'est parti !" icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight}/>}/>
+                <Button onClick={ handleClick } text="C'est parti !" icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={ faArrowRight }/>}/>
             </div>
         </div>
     );

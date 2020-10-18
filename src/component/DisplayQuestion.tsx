@@ -1,39 +1,39 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Question} from "../type/Question";
 import {removeFromArray} from "../functions";
 import {Response} from "../type/Response";
 
 type Props = {
-    question:Question,
-    onNext(response:Response) :void,
-    loading:boolean
+    question: Question,
+    onNext(response: Response): void,
+    loading: boolean
 }
 
-export default function DisplayQuestion(props:Props){
+export default function DisplayQuestion(props: Props){
     const [userResponse,setUserResponse] = useState<Array<string>>([]);
 
     useEffect(() => {
         setUserResponse([]);
     },[props.question]);
 
-    const handleResponseChange = (e:any) => {
-        const value:string = e.currentTarget.value;
+    const handleResponseChange = ( e: ChangeEvent<HTMLInputElement> ) => {
+        const value: string = e.currentTarget.value;
         let newResponses = userResponse;
         if(!newResponses.includes(value)){
             newResponses.push(value);
         }else{
-            newResponses = removeFromArray(value,newResponses);
+            newResponses = removeFromArray(value, newResponses);
         }
         setUserResponse(newResponses);
     };
 
     const answers = (
         <>
-            {props.question.answers.map((answer) =>{
+            {props.question.answers.map( (answer) =>{
                 return (
                     <div key={props.question.id + '-' + answer.key} className="my-4 flex text-lg ml-4">
-                        <input type="checkbox" defaultChecked={false} className="cursor-pointer my-auto" id={'response-'+ props.question.id +'-'+answer.key} value={answer.key} onChange={handleResponseChange}/>
-                        <label className="ml-2 cursor-pointer" htmlFor={'response-'+ props.question.id +'-'+answer.key}>{answer.text}</label>
+                        <input type="checkbox" defaultChecked={false} className="cursor-pointer my-auto" id={ 'response-'+ props.question.id +'-'+answer.key } value={ answer.key } onChange={ handleResponseChange }/>
+                        <label className="ml-2 cursor-pointer" htmlFor={'response-'+ props.question.id +'-'+answer.key}>{ answer.text }</label>
                     </div>
                 );
             })}
