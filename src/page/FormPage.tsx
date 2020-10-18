@@ -8,7 +8,7 @@ import {RiPushpin2Fill} from "react-icons/all";
 import {useMutation} from "@apollo/client";
 import {NEW_ANSWER_QUERY} from "../utils/queries";
 import ErrorDiv from "../component/ErrorDiv";
-import ProgressBar from "../component/ProgressBar";
+import ProgressTimer from "../component/ProgressTimer";
 
 export enum FORM_STATE {
     NOT_STARTED,
@@ -20,8 +20,7 @@ export enum FORM_STATE {
 export default function FormPage(){
     const session = useSession();
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState<number>(session.state.formStep ? session.state.formStep : 0);
-    const [currentTimer,setCurrentTimer] = useState<number>(session.state.formTimer ? session.state.formTimer : 0);
-    const [formState,setFormState] = useState<number>(FORM_STATE.PROCESSING);
+    const [formState,setFormState] = useState<number>(session.state.formState > FORM_STATE.PROCESSING ? session.state.formState : FORM_STATE.PROCESSING);
     const [error,setError] = useState<string|null>(null);
     const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY);
 
@@ -34,27 +33,12 @@ export default function FormPage(){
         });
     };
 
-    useEffect(() => {
-        const timeInterval = setInterval(()=>{
-            setCurrentTimer((prevTimerState) => {
-                if((prevTimerState + 1) <= QCM_TIME){
-                    session.update((prevState => {return {...prevState, formTimer: (prevTimerState + 1)}}));
-                    return prevTimerState + 1;
-                }
-                clearInterval(timeInterval);
-                return prevTimerState;
-            });
-        },1000);
-
-        return () => { clearInterval(timeInterval); }
-    },[session]);
-
-    useEffect(() => {
-        if(currentTimer >= QCM_TIME && formState === FORM_STATE.PROCESSING){
+    const checkCurrentTimer = (timer: number) => {
+        if(timer >= QCM_TIME && session.state.formState === FORM_STATE.PROCESSING){
             setFormState(FORM_STATE.TIMED_OUT);
             setCurrentQuestionIndex(QCM.length+1);
         }
-    },[currentTimer,formState]);
+    };
 
     useEffect(() => {
         session.update((prevState => {return {...prevState, formStep:currentQuestionIndex}}));
@@ -71,7 +55,7 @@ export default function FormPage(){
         <div className="m-10 w-full">
             {(formState !== FORM_STATE.ENDED && formState !== FORM_STATE.TIMED_OUT) && QCM[currentQuestionIndex] !== undefined ? (
                 <>
-                    <ProgressBar max={QCM_TIME} currentValue={currentTimer}/>
+                    <ProgressTimer checkTimer={checkCurrentTimer}/>
                     <div className="text-right italic text-lg flex justify-end">
                         <div className='my-auto'>Question {currentQuestionIndex + 1}/{QCM.length}</div>
                         <RiPushpin2Fill className="my-auto ml-2"/>
