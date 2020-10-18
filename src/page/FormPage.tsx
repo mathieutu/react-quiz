@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {QCM, QCM_TIME} from "../Data";
 import DisplayQuestion from "../component/DisplayQuestion";
-import {Response} from "../type/Response";
+import {UserAnswer} from "../type/UserAnswer";
 import {useSession} from "../context/SessionContext";
 import EndPage from "./EndPage";
 import {RiPushpin2Fill} from "react-icons/all";
@@ -24,10 +24,10 @@ export default function FormPage(){
     const [error, setError] = useState<string|null>(null);
     const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY);
 
-    const handleNext = (userResponse: Response) => {
-        addAnswer({ variables: { answer: JSON.stringify(userResponse.responses), questionId: userResponse.questionId, userId:session.state.user!.id } }).then(({data}) =>{
+    const handleNext = (userAnswer: UserAnswer) => {
+        addAnswer({ variables: { answer: JSON.stringify(userAnswer.answers), questionId : userAnswer.questionId, userId : session.state.user!.id } }).then( ({ data }) =>{
             setCurrentQuestionIndex(currentQuestionIndex + 1);
-        }).catch((e) => {
+        }).catch( (e) => {
             console.log(e);
             setError(e.message);
         });

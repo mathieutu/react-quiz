@@ -1,8 +1,8 @@
-import {Answer} from "./Answer";
+import {PossibleAnswer} from "./PossibleAnswer";
 import {ReactNode} from "react";
 
 export type Question = {
     content:ReactNode,
     id:string,
-    answers:Array<Answer>
+    possibleAnswers:Array<PossibleAnswer>
 }
