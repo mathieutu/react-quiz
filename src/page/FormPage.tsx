@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import DisplayQuestion from '../component/DisplayQuestion'
-import { UserAnswer } from '../type/UserAnswer'
+import { Question } from '../component/Question'
 import { RiPushpin2Fill } from 'react-icons/all'
 import { useMutation } from '@apollo/client'
 import { NEW_ANSWER_QUERY } from '../utils/queries'
@@ -16,11 +15,11 @@ export const FormPage = () => {
   const { user } = useUser()
   const { currentQuestion, currentQuestionIndex, goToNextQuestion, questions } = useQuiz()
 
-  const handleNext = (userAnswer: UserAnswer) => {
+  const handleNext = (userAnswers: string[]) => {
     addAnswer({
       variables: {
-        answer: JSON.stringify(userAnswer.answers),
-        questionId: userAnswer.questionId,
+        answer: JSON.stringify(userAnswers),
+        questionId: currentQuestion.id,
         userId: user!.id,
       },
     })
@@ -38,7 +37,7 @@ export const FormPage = () => {
         <div className='my-auto'>Question {currentQuestionIndex + 1}/{questions.length}</div>
         <RiPushpin2Fill className="my-auto ml-2" />
       </div>
-      <DisplayQuestion question={currentQuestion} loading={loading} onNext={handleNext} />
+      <Question key={currentQuestion.id} question={currentQuestion} loading={loading} onNext={handleNext} />
       {error ? <Error text={error} /> : null}
     </div>
   )

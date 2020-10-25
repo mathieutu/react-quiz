@@ -15,7 +15,9 @@ export const ProgressTimer = () => {
     return () => clearInterval(timeInterval)
   }, [reRender])
 
+  const quantityOfSecondSinceStart = Math.trunc((Date.now() - startedAt!) / 1000)
+
   return (
-    <ProgressBar max={duration} currentValue={Date.now() - startedAt!} />
+    <ProgressBar max={duration} currentValue={quantityOfSecondSinceStart} />
   )
 }

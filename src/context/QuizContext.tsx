@@ -2,15 +2,10 @@ import { useAndAssertContext, useLocalStorageState } from '../utils/hooks'
 import React, { ReactNode } from 'react'
 import { DURATION, QUESTIONS } from '../quizConfiguration'
 
-export type PossibleAnswer = {
-  key: string,
-  text: string
-};
-
 export type Question = {
-  content: ReactNode,
   id: string,
-  possibleAnswers: PossibleAnswer[]
+  title: ReactNode,
+  possibleAnswers: { key: string, label: string }[]
 }
 
 type QuizContext = {
