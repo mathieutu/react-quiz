@@ -10,7 +10,7 @@ import LoginPage from "./page/LoginPage";
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: 'https://infinite-prawn-57.hasura.app/v1/graphql',
+    uri: process.env.REACT_APP_API_URL,
     cache: new InMemoryCache()
 });
 
