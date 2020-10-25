@@ -1,11 +1,5 @@
-import React, { ReactNode } from 'react'
-import { PossibleAnswer } from './type/PossibleAnswer'
-
-export type Question = {
-  content: ReactNode,
-  id: string,
-  possibleAnswers: Array<PossibleAnswer>
-}
+import React from 'react'
+import { Question } from './context/QuizContext'
 
 export const DURATION = 20
 

@@ -1,11 +1,26 @@
 import { useAndAssertContext, useLocalStorageState } from '../utils/hooks'
 import React, { ReactNode } from 'react'
+import { QUESTIONS } from '../quizConfiguration'
+
+export type PossibleAnswer = {
+  key: string,
+  text: string
+};
+
+export type Question = {
+  content: ReactNode,
+  id: string,
+  possibleAnswers: PossibleAnswer[]
+}
 
 type QuizContext = {
   startedAt: number | null,
-  currentQuestionId: string | null,
+  currentQuestionIndex: number,
+  currentQuestion: Question,
+  questions: Question[]
   startQuiz: () => void,
-  setCurrentQuestionId: (questionId: string) => void,
+  goToNextQuestion: () => void,
+  goToPreviousQuestion: () => void,
 }
 
 const quizContext = React.createContext<QuizContext | undefined>(undefined)
@@ -14,12 +29,15 @@ type ChildrenProps = { children: ReactNode }
 
 export const QuizProvider = ({ children }: ChildrenProps) => {
   const [startedAt, setStartedAt] = useLocalStorageState<number | null>('startedAt', null)
-  const [currentQuestionId, setCurrentQuestionId] = useLocalStorageState<string | null>('currentQuestionId', null)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useLocalStorageState<number>('currentQuestionId', 0)
 
   const context: QuizContext = {
     startedAt,
-    currentQuestionId,
-    setCurrentQuestionId,
+    currentQuestionIndex,
+    currentQuestion: QUESTIONS[currentQuestionIndex],
+    questions: QUESTIONS,
+    goToNextQuestion: () => setCurrentQuestionIndex(i => i + 1),
+    goToPreviousQuestion: () => setCurrentQuestionIndex(i => i - 1),
     startQuiz: () => setStartedAt(Date.now()),
   }
 
