@@ -1,11 +1,11 @@
 import React from 'react'
-import Button from '../component/Button'
+import { Button } from '../component/Button'
 import { useQuiz } from '../context/QuizContext'
 
 const Message = () => {
-  const { startedAt, duration } = useQuiz()
+  const { endsAt } = useQuiz()
 
-  if (Date.now() >= startedAt! + duration * 1000) {
+  if (Date.now() >= endsAt!) {
     return <>Le temps est écoulé, les réponses envoyées ont bien été enregistrées.</>
   }
 
