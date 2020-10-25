@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint '**/*.ts*'",
+    "lint": "eslint '**/*.{ts*, js}'",
     "build:css": "npx tailwindcss build src/assets/css/index.css -o src/assets/css/index.output.css"
   },
   "eslintConfig": {

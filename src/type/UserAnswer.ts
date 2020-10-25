@@ -1,4 +1,4 @@
 export type UserAnswer = {
-    questionId:string,
-    answers:Array<string>
+  questionId: string,
+  answers: Array<string>
 }

@@ -1,23 +1,24 @@
-body{
-    background-color: #edf2f7;
+body {
+  background-color: #edf2f7;
 }
 
-.my-btn-anim:active{
-    transform: scale(0.97);
+.my-btn-anim:active {
+  transform: scale(0.97);
 }
 
-.my-btn-anim-disabled{
-    background-color: dimgrey;
-    opacity: 0.75;
+.my-btn-anim-disabled {
+  background-color: dimgrey;
+  opacity: 0.75;
 }
 
 ::-webkit-progress-bar {
-    background-color: #e2e8f0;
+  background-color: #e2e8f0;
 }
 
 ::-webkit-progress-value {
-    background-color: #639fe0;
+  background-color: #639fe0;
 }
-::-moz-progress-bar{
-    background-color: #639fe0;
+
+::-moz-progress-bar {
+  background-color: #639fe0;
 }
