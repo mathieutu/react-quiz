@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Question as QuestionType } from '../quizConfiguration'
+import type { Question as QuestionType } from '../configuration'
 
 type QuestionProps = {
   question: QuestionType,

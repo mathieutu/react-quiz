@@ -1,12 +1,11 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { QUESTIONS } from '../quizConfiguration'
 import { Button } from '../component/Button'
 import { useQuiz } from '../context/QuizContext'
 
 export const HomePage = () => {
-  const { startQuiz } = useQuiz()
+  const { startQuiz, questionsQuantity } = useQuiz()
 
   return (
     <div className="flex h-full flex-col mx-24 my-16 text-lg">
@@ -15,7 +14,7 @@ export const HomePage = () => {
           <strong>Attention</strong>, prenez connaissance des règles ci-dessous avant de commencer le questionnaire :
         </div>
         <div>
-          Le formulaire comporte {QUESTIONS.length} questions. Suivant les questions, <span className="underline">plusieurs réponses sont possibles</span>
+          Le formulaire comporte {questionsQuantity} questions. Suivant les questions, <span className="underline">plusieurs réponses sont possibles</span>
           (ou parfois une seule).
           <br />
           Dès lors que vous avez choisi votre/vos réponses pour la question en cours, cliquez sur le bouton

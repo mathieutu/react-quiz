@@ -1,16 +1,15 @@
 import React, { ReactNode } from 'react'
 import { useAndAssertContext, useLocalStorageState } from '../utils/hooks'
-import { DURATION, Question, QUESTIONS } from '../quizConfiguration'
+import { DURATION, Question, QUESTIONS } from '../configuration'
 
 type QuizContext = {
   startedAt: number | null,
   endsAt: number | null,
-  duration: number,
   startQuiz: () => void,
 
   currentQuestionIndex: number,
   currentQuestion: Question,
-  questions: Question[]
+  questionsQuantity: number
   goToNextQuestion: () => void,
   goToPreviousQuestion: () => void,
   setCurrentQuestionIndex: (index: number) => void,
@@ -24,7 +23,6 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 
   const context: QuizContext = {
     startedAt,
-    duration: DURATION,
     endsAt: startedAt && startedAt + DURATION * 1000,
     startQuiz: () => {
       setCurrentQuestionIndex(0)
@@ -33,7 +31,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
 
     currentQuestionIndex,
     currentQuestion: QUESTIONS[currentQuestionIndex],
-    questions: QUESTIONS,
+    questionsQuantity: QUESTIONS.length,
     setCurrentQuestionIndex,
     goToNextQuestion: () => setCurrentQuestionIndex(i => i + 1),
     goToPreviousQuestion: () => setCurrentQuestionIndex(i => i - 1),
