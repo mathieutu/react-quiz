@@ -7,17 +7,14 @@ import FormPage from "./page/FormPage";
 import ErrorPage from "./page/ErrorPage/ErrorPage";
 import {useSession} from "./context/SessionContext";
 import LoginPage from "./page/LoginPage";
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from './context/Apollo'
 
-const client = new ApolloClient({
-    uri: process.env.REACT_APP_API_URL,
-    cache: new InMemoryCache()
-});
+
 
 function App() {
     const { state } = useSession();
     return (
-        <ApolloProvider client={ client }>
+        <ApolloProvider>
             <BrowserRouter>
                 {state.user === null ? (
                     <LoginPage/>
