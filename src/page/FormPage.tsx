@@ -7,7 +7,7 @@ import EndPage from './EndPage'
 import { RiPushpin2Fill } from 'react-icons/all'
 import { useMutation } from '@apollo/client'
 import { NEW_ANSWER_QUERY } from '../utils/queries'
-import ErrorDiv from '../component/ErrorDiv'
+import Error from '../component/Error'
 import ProgressTimer from '../component/ProgressTimer'
 import { useUser } from '../context/UserContext'
 
@@ -74,7 +74,7 @@ export default function FormPage() {
             <RiPushpin2Fill className="my-auto ml-2" />
           </div>
           <DisplayQuestion question={QCM[currentQuestionIndex]} loading={loading} onNext={handleNext} />
-          {error ? <ErrorDiv text={error} /> : null}
+          {error ? <Error text={error} /> : null}
         </>
       ) : (
         <EndPage />

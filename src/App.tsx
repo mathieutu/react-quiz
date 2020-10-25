@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import HomePage from './page/HomePage'
 import FormPage from './page/FormPage'
 import ErrorPage from './page/ErrorPage/ErrorPage'
-import LoginPage from './page/LoginPage'
+import { LoginPage } from './page/LoginPage'
 import { useUser } from './context/UserContext'
 
 
