@@ -18,6 +18,7 @@ type QuizContext = {
   questions: Question[]
   goToNextQuestion: () => void,
   goToPreviousQuestion: () => void,
+  setCurrentQuestionIndex: (index: number) => void,
 }
 
 const quizContext = React.createContext<QuizContext | undefined>(undefined)
@@ -36,6 +37,7 @@ export const QuizProvider = ({ children }: ChildrenProps) => {
     currentQuestionIndex,
     currentQuestion: QUESTIONS[currentQuestionIndex],
     questions: QUESTIONS,
+    setCurrentQuestionIndex,
     goToNextQuestion: () => setCurrentQuestionIndex(i => i + 1),
     goToPreviousQuestion: () => setCurrentQuestionIndex(i => i - 1),
   }

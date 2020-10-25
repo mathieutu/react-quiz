@@ -5,7 +5,7 @@ import { useReRenderComponent } from '../utils/hooks'
 
 export const ProgressTimer = () => {
 
-  const { duration, startedAt } = useQuiz()
+  const { duration, startedAt, setCurrentQuestionIndex, questions } = useQuiz()
 
   const reRender = useReRenderComponent()
 
@@ -16,6 +16,12 @@ export const ProgressTimer = () => {
   }, [reRender])
 
   const quantityOfSecondSinceStart = Math.trunc((Date.now() - startedAt!) / 1000)
+
+  useEffect(() => {
+    if (quantityOfSecondSinceStart >= duration) {
+      setCurrentQuestionIndex(questions.length)
+    }
+  }, [quantityOfSecondSinceStart, duration, questions.length, setCurrentQuestionIndex])
 
   return (
     <ProgressBar max={duration} currentValue={quantityOfSecondSinceStart} />

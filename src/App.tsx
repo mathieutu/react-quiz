@@ -1,22 +1,21 @@
 import React from 'react'
 import './assets/css/App.css'
 import Header from './component/Header'
-import { HomePage } from './page/HomePage'
-import { FormPage } from './page/FormPage'
-import { LoginPage } from './page/LoginPage'
+import { HomePage } from './pages/HomePage'
+import { FormPage } from './pages/FormPage'
+import { LoginPage } from './pages/LoginPage'
 import { useUser } from './context/UserContext'
 import { useQuiz } from './context/QuizContext'
-import EndPage from './page/EndPage'
+import { EndPage } from './pages/EndPage'
 
 const AppContent = () => {
-  const { startedAt } = useQuiz()
+  const { startedAt, currentQuestion } = useQuiz()
 
   if (!startedAt) {
     return <HomePage />
   }
 
-  // TODO à faire !
-  if (false) {
+  if (!currentQuestion) {
     return <EndPage />
   }
 

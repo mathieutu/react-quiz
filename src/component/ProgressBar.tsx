@@ -20,8 +20,12 @@ export const ProgressBar = (props: Props) => (
   <div className="w-full flex">
     <div className="mx-auto flex">
       <progress
-        className="w-64 bg-gray-300 my-auto appearance-none" max={props.max}
-        value={props.currentValue}>{props.currentValue}</progress>
+        className="w-64 bg-gray-300 my-auto appearance-none"
+        max={props.max}
+        value={props.currentValue}
+      >
+        {props.currentValue}
+      </progress>
       <div className="my-auto mx-4 flex">{secondsToTime(props.max - props.currentValue)}</div>
     </div>
   </div>
