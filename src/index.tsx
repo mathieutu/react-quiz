@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './assets/css/index.output.css'
+import './assets/css/tailwind.css'
 import { App } from './App'
 import AppSessionProvider from './context/SessionContext'
 import { ApolloProvider } from './context/Apollo'
