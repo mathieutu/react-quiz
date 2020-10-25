@@ -1,45 +1,33 @@
 import React from 'react'
-import { QCM } from '../Data'
+import { QUESTIONS } from '../quizConfiguration'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { useHistory } from 'react-router'
-import { useSession } from '../context/SessionContext'
 import Button from '../component/Button'
-import { FORM_STATE } from './FormPage'
+import { useQuiz } from '../context/QuizContext'
 
-export default function HomePage() {
-  const history = useHistory()
-  const session = useSession()
-
-  const handleClick = () => {
-    session.update((prevState => {
-      return { ...prevState, formState: FORM_STATE.PROCESSING }
-    }))
-    history.push('/form')
-  }
-
-  if (session.state.formState !== FORM_STATE.NOT_STARTED) {
-    history.push('/form')
-  }
+export const HomePage = () => {
+  const { startQuiz } = useQuiz()
 
   return (
     <div className="flex h-full flex-col mx-24 my-16 text-lg">
       <div className="pl-6 border-l-2">
         <div className="mb-6">
-          <b>Attention</b>, prenez connaissance des règles ci-dessous avant de commencer le questionnaire :
+          <strong>Attention</strong>, prenez connaissance des règles ci-dessous avant de commencer le questionnaire :
         </div>
         <div>
-          Le formulaire comporte {QCM.length} questions. Suivant les questions, <span className="underline">plusieurs réponses sont possibles</span> (ou
-          parfois une seule).
+          Le formulaire comporte {QUESTIONS.length} questions. Suivant les questions, <span className="underline">plusieurs réponses sont possibles</span>
+          (ou parfois une seule).
           <br />Dès lors que vous avez choisi votre/vos réponses pour la question en cours, cliquez sur le bouton
           suivant.
-          Aucun retour en arrière n'est possible, <span
-          className="underline">soyez sûrs de vous avant de répondre !</span>
+          Aucun retour en arrière n'est possible,
+          <span className="underline">soyez sûrs de vous avant de répondre !</span>
         </div>
       </div>
       <div className="mt-10 flex">
-        <Button onClick={handleClick} text="C'est parti !"
-                icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight} />} />
+        <Button
+          onClick={startQuiz}
+          text="C'est parti !"
+          icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight} />} />
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
 import './assets/css/App.css'
 import Header from './component/Header'
-import HomePage from './page/HomePage'
+import { HomePage } from './page/HomePage'
 import FormPage from './page/FormPage'
 import { LoginPage } from './page/LoginPage'
 import { useUser } from './context/UserContext'

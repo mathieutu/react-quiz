@@ -1,9 +1,15 @@
-import React from 'react'
-import { Question } from './type/Question'
+import React, { ReactNode } from 'react'
+import { PossibleAnswer } from './type/PossibleAnswer'
 
-export const QCM_TIME = 20
+export type Question = {
+  content: ReactNode,
+  id: string,
+  possibleAnswers: Array<PossibleAnswer>
+}
 
-export const QCM: Array<Question> = [
+export const DURATION = 20
+
+export const QUESTIONS: Question[] = [
   {
     id: 'question-1',
     content: <>Quel est la capitale de la Roumanie ?</>,
