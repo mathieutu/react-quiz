@@ -1,7 +1,6 @@
-import React, { FormEvent, useContext, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { sessionContext } from '../context/SessionContext'
 import { useHistory } from 'react-router'
 import Button from '../component/Button'
 import { useMutation } from '@apollo/client'
@@ -9,32 +8,31 @@ import { CgSpinnerTwoAlt } from 'react-icons/all'
 import { NEW_USER_QUERY } from '../utils/queries'
 import { User } from '../type/User'
 import ErrorDiv from '../component/ErrorDiv'
+import { useUser } from '../context/UserContext'
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('')
   const [name, setName] = useState<string>('')
-  const session = useContext(sessionContext)
   const history = useHistory()
   const [formError, setFormError] = useState<string | null>(null)
   const [addUser, { loading }] = useMutation(NEW_USER_QUERY)
 
+  const { setUser } = useUser()
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
 
-    if (session !== undefined) {
-      if (!checkLoginForm()) {
-        setFormError('Veuillez renseigner l\'email ET le nom par des valeurs valides')
-      } else {
-        addUser({ variables: { email, name } }).then(({ data }) => {
-          const newUser: User = data.addUser
-          session.update((prevState => {
-            return { ...prevState, user: newUser }
-          }))
-          history.push('/')
-        }).catch((e) => {
-          setFormError(e.message)
-        })
-      }
+    if (!checkLoginForm()) {
+      setFormError('Veuillez renseigner l\'email ET le nom par des valeurs valides')
+    } else {
+      addUser({ variables: { email, name } }).then(({ data }) => {
+        const newUser: User = data.addUser
+        setUser(newUser)
+
+        history.push('/')
+      }).catch((e) => {
+        setFormError(e.message)
+      })
     }
   }
 

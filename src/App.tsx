@@ -5,14 +5,14 @@ import { Route, Switch } from 'react-router-dom'
 import HomePage from './page/HomePage'
 import FormPage from './page/FormPage'
 import ErrorPage from './page/ErrorPage/ErrorPage'
-import { useSession } from './context/SessionContext'
 import LoginPage from './page/LoginPage'
+import { useUser } from './context/UserContext'
 
 
 export const App = () => {
-  const { state } = useSession()
+  const { user } = useUser()
 
-  if (!state.user) {
+  if (!user) {
     return <LoginPage />
   }
 

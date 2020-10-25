@@ -9,6 +9,7 @@ import { useMutation } from '@apollo/client'
 import { NEW_ANSWER_QUERY } from '../utils/queries'
 import ErrorDiv from '../component/ErrorDiv'
 import ProgressTimer from '../component/ProgressTimer'
+import { useUser } from '../context/UserContext'
 
 export enum FORM_STATE {
   NOT_STARTED,
@@ -24,12 +25,14 @@ export default function FormPage() {
   const [error, setError] = useState<string | null>(null)
   const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY)
 
+  const { user } = useUser()
+
   const handleNext = (userAnswer: UserAnswer) => {
     addAnswer({
       variables: {
         answer: JSON.stringify(userAnswer.answers),
         questionId: userAnswer.questionId,
-        userId: session.state.user!.id,
+        userId: user!.id,
       },
     }).then(({ data }) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1)

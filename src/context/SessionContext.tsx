@@ -1,9 +1,8 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
-import { User } from '../type/User'
 import { FORM_STATE } from '../page/FormPage'
+import { UserProvider } from './UserContext'
 
 interface SessionStateType {
-  user: User | null,
   formStep: number,
   formState: number,
   formTimer: number
@@ -17,7 +16,6 @@ interface SessionValue {
 }
 
 const sessionStateDefaultValues: SessionStateType = {
-  user: null,
   formStep: 0,
   formTimer: 0,
   formState: FORM_STATE.NOT_STARTED,
@@ -53,8 +51,10 @@ export default function AppSessionProvider(props: any) {
   }, [sessionState])
 
   return (
-    <sessionContext.Provider value={{ state: sessionState, update: setSessionState, logout: handleLogout }}>
-      {props.children}
-    </sessionContext.Provider>
+    <UserProvider>
+      <sessionContext.Provider value={{ state: sessionState, update: setSessionState, logout: handleLogout }}>
+        {props.children}
+      </sessionContext.Provider>
+    </UserProvider>
   )
 }
