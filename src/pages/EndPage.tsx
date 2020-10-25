@@ -2,7 +2,6 @@ import React from 'react'
 import Button from '../component/Button'
 import { useQuiz } from '../context/QuizContext'
 
-
 const Message = () => {
   const { startedAt, duration } = useQuiz()
 
@@ -13,7 +12,6 @@ const Message = () => {
   return <>Merci, les réponses ont été enregistrées.</>
 }
 export const EndPage = () => {
-
   const handleQuit = () => {
     localStorage.clear()
     window.location.reload()
@@ -25,7 +23,7 @@ export const EndPage = () => {
         <Message />
       </div>
       <div className="mt-10 text-lg text-center">
-        <Button onClick={handleQuit} text='Bye bye' />
+        <Button onClick={handleQuit} text="Bye bye" />
       </div>
     </div>
   )

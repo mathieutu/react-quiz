@@ -3,7 +3,6 @@ import { Context, Dispatch, SetStateAction, useContext, useEffect, useState } fr
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
 export const useLocalStorageState = <T>(key: string, initialValue: T): [T, SetState<T>] => {
-
   const prefixedKey = `qcm:${key}`
 
   const [value, setValue] = useState<T>(() => {

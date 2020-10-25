@@ -1,8 +1,8 @@
 import React from 'react'
-import { QUESTIONS } from '../quizConfiguration'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import Button from '../component/Button'
+import { QUESTIONS } from '../quizConfiguration'
+import { Button } from '../component/Button'
 import { useQuiz } from '../context/QuizContext'
 
 export const HomePage = () => {
@@ -17,7 +17,8 @@ export const HomePage = () => {
         <div>
           Le formulaire comporte {QUESTIONS.length} questions. Suivant les questions, <span className="underline">plusieurs réponses sont possibles</span>
           (ou parfois une seule).
-          <br />Dès lors que vous avez choisi votre/vos réponses pour la question en cours, cliquez sur le bouton
+          <br />
+          Dès lors que vous avez choisi votre/vos réponses pour la question en cours, cliquez sur le bouton
           suivant.
           Aucun retour en arrière n'est possible,
           <span className="underline">soyez sûrs de vous avant de répondre !</span>
@@ -27,7 +28,8 @@ export const HomePage = () => {
         <Button
           onClick={startQuiz}
           text="C'est parti !"
-          icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight} />} />
+          icon={<FontAwesomeIcon className="ml-2 transition duration-150" icon={faArrowRight} />}
+        />
       </div>
     </div>
   )

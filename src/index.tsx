@@ -11,7 +11,7 @@ const root = (
     <UserProvider>
       <QuizProvider>
         <ApolloProvider>
-            <App />
+          <App />
         </ApolloProvider>
       </QuizProvider>
     </UserProvider>

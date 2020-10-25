@@ -1,11 +1,11 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import Button from '../component/Button'
 import { useMutation } from '@apollo/client'
 import { CgSpinnerTwoAlt } from 'react-icons/all'
+import { Button } from '../component/Button'
 import { NEW_USER_QUERY } from '../utils/queries'
-import Error from '../component/Error'
+import { Error } from '../component/Error'
 import { useUser } from '../context/UserContext'
 
 export const LoginPage = () => {
@@ -28,9 +28,8 @@ export const LoginPage = () => {
 
     addUser({ variables: formState })
       .then(({ data }) => setUser(data.addUser))
-      .catch((e) => setFormError(e.message))
+      .catch(({ message }) => setFormError(message))
   }
-
 
   return (
     <div className="text-lg flex h-screen bg-white w-screen">
@@ -40,8 +39,10 @@ export const LoginPage = () => {
           <label className="mb-2">
             Email <span className="text-red-800">*</span>
             <input
-              type="email" required
-              name="email" onChange={handleChange}
+              type="email"
+              required
+              name="email"
+              onChange={handleChange}
               className="w-full focus:shadow-lg p-2 px-3 rounded"
             />
           </label>
@@ -50,14 +51,17 @@ export const LoginPage = () => {
           <label className="mb-2">
             Nom et Prénom <span className="text-red-800">*</span>
             <input
-              type="text" required
-              name="name" onChange={handleChange}
+              type="text"
+              required
+              name="name"
+              onChange={handleChange}
               className="w-full focus:shadow-lg p-2 px-3 rounded"
             />
           </label>
         </div>
         <div className="mt-8 flex">
           <Button
+            type="submit"
             text="Commencer"
             disabled={loading}
             icon={

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Question as QuestionType } from '../context/QuizContext'
+import { Question as QuestionType } from '../quizConfiguration'
 
 type QuestionProps = {
   question: QuestionType,
@@ -14,7 +14,8 @@ export const Question = ({ question, onNext, loading }: QuestionProps) => {
     setUserAnswers(answers => {
       const uniqueAnswers = new Set(answers)
 
-      checked ? uniqueAnswers.add(value) : uniqueAnswers.delete(value)
+      if (checked) uniqueAnswers.add(value)
+      else uniqueAnswers.delete(value)
 
       return [...uniqueAnswers]
     })
@@ -24,10 +25,13 @@ export const Question = ({ question, onNext, loading }: QuestionProps) => {
     <div key={key} className="my-4 flex text-lg ml-4">
       <label className="ml-2 cursor-pointer">
         <input
-          type="checkbox" defaultChecked={false} className="cursor-pointer my-auto"
+          type="checkbox"
+          defaultChecked={false}
+          className="cursor-pointer my-auto"
           value={key}
           onChange={handleResponseChange}
-        /> {label}
+        />
+        {label}
       </label>
     </div>
   ))
@@ -40,7 +44,8 @@ export const Question = ({ question, onNext, loading }: QuestionProps) => {
       <div className="flex mt-6">
         {loading ? (
           <div
-            className="text-white border bg-gray-700 px-3 py-1 mx-2 cursor-pointer select-none rounded opacity-50">
+            className="text-white border bg-gray-700 px-3 py-1 mx-2 cursor-pointer select-none rounded opacity-50"
+          >
             Traitement ...
           </div>
         ) : (

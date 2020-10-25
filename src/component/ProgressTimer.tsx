@@ -4,7 +4,6 @@ import { useQuiz } from '../context/QuizContext'
 import { useReRenderComponent } from '../utils/hooks'
 
 export const ProgressTimer = () => {
-
   const { duration, startedAt, setCurrentQuestionIndex, questions } = useQuiz()
 
   const reRender = useReRenderComponent()

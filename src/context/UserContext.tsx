@@ -1,5 +1,5 @@
-import { useAndAssertContext, useLocalStorageState } from '../utils/hooks'
 import React, { ReactNode } from 'react'
+import { useAndAssertContext, useLocalStorageState } from '../utils/hooks'
 
 type User = {
   id: string,
@@ -16,7 +16,7 @@ type ChildrenProps = { children: ReactNode }
 export const UserProvider = ({ children }: ChildrenProps) => {
   const [user, setUser] = useLocalStorageState<User | null>('user', null)
 
-  return <userContext.Provider value={{ user, setUser }} children={children} />
+  return <userContext.Provider value={{ user, setUser }}>{children}</userContext.Provider>
 }
 
 export const useUser = () => useAndAssertContext(userContext)

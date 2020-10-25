@@ -1,5 +1,10 @@
-import React from 'react'
-import { Question } from './context/QuizContext'
+import React, { ReactNode } from 'react'
+
+export type Question = {
+  id: string,
+  title: ReactNode,
+  possibleAnswers: { key: string, label: string }[]
+}
 
 export const DURATION = 600
 

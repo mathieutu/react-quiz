@@ -1,7 +1,6 @@
 import React from 'react'
 
 export const Error = ({ text }: { text: string | undefined }) => {
-
   if (!text) {
     return null
   }
@@ -12,5 +11,3 @@ export const Error = ({ text }: { text: string | undefined }) => {
     </div>
   )
 }
-
-export default Error

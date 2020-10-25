@@ -18,12 +18,9 @@
     "prebuild": "NODE_ENV=production yarn build:css",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint '**/*.{ts*, js}'",
+    "lint": "eslint '**/*.{ts*, js}' --fix",
     "typecheck": "tsc --noEmit",
     "build:css": "postcss node_modules/tailwindcss/tailwind.css -o src/assets/css/tailwind.css"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
