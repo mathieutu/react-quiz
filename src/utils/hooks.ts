@@ -28,3 +28,9 @@ export const useAndAssertContext = <T>(context: Context<T | undefined>): T => {
 
   return state
 }
+
+export const useReRenderComponent = () => {
+  const [, setState] = useState<boolean>(false)
+
+  return () => setState(state => !state)
+}

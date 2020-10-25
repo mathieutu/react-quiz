@@ -5,7 +5,7 @@ import { RiPushpin2Fill } from 'react-icons/all'
 import { useMutation } from '@apollo/client'
 import { NEW_ANSWER_QUERY } from '../utils/queries'
 import Error from '../component/Error'
-import ProgressTimer from '../component/ProgressTimer'
+import { ProgressTimer } from '../component/ProgressTimer'
 import { useUser } from '../context/UserContext'
 import { useQuiz } from '../context/QuizContext'
 

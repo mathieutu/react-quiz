@@ -1,6 +1,6 @@
 import { useAndAssertContext, useLocalStorageState } from '../utils/hooks'
 import React, { ReactNode } from 'react'
-import { QUESTIONS } from '../quizConfiguration'
+import { DURATION, QUESTIONS } from '../quizConfiguration'
 
 export type PossibleAnswer = {
   key: string,
@@ -15,10 +15,12 @@ export type Question = {
 
 type QuizContext = {
   startedAt: number | null,
+  duration: number,
+  startQuiz: () => void,
+
   currentQuestionIndex: number,
   currentQuestion: Question,
   questions: Question[]
-  startQuiz: () => void,
   goToNextQuestion: () => void,
   goToPreviousQuestion: () => void,
 }
@@ -33,12 +35,14 @@ export const QuizProvider = ({ children }: ChildrenProps) => {
 
   const context: QuizContext = {
     startedAt,
+    duration: DURATION,
+    startQuiz: () => setStartedAt(Date.now()),
+
     currentQuestionIndex,
     currentQuestion: QUESTIONS[currentQuestionIndex],
     questions: QUESTIONS,
     goToNextQuestion: () => setCurrentQuestionIndex(i => i + 1),
     goToPreviousQuestion: () => setCurrentQuestionIndex(i => i - 1),
-    startQuiz: () => setStartedAt(Date.now()),
   }
 
   return <quizContext.Provider value={context} children={children} />
