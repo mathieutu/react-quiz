@@ -1,42 +1,46 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { Question } from '../component/Question'
-import { NEW_ANSWER_QUERY } from '../utils/queries'
 import { ErrorAlert } from '../component/ErrorAlert'
-import { ProgressTimer } from '../component/ProgressTimer'
 import { useUser } from '../context/UserContext'
 import { useQuiz } from '../context/QuizContext'
+import { NEW_ANSWER_MUTATION } from '../utils/queries'
+import { FormHeader } from '../component/FormHeader'
 
 export const FormPage = () => {
   const [error, setError] = useState<string | null>(null)
-  const [addAnswer, { loading }] = useMutation(NEW_ANSWER_QUERY)
+  const [addAnswer, { loading }] = useMutation(NEW_ANSWER_MUTATION)
 
   const { user } = useUser()
-  const { currentQuestion, currentQuestionIndex, goToNextQuestion, questionsQuantity } = useQuiz()
+  const { currentQuestion, goToNextQuestion, goToPreviousQuestion } = useQuiz()
+  const [userAnswers, setUserAnswers] = useState<string[]>([])
 
-  const handleNext = (userAnswers: string[]) => {
+  const submitAnswers = () => (
     addAnswer({
       variables: {
         answer: JSON.stringify(userAnswers),
         questionId: currentQuestion.id,
         userId: user!.id,
       },
-    })
-      .then(goToNextQuestion)
-      .catch(e => setError(e.message))
-  }
+    }).catch(e => setError(e.message))
+  )
+
+  const handleNext = () => submitAnswers().then(goToNextQuestion)
+  const handlePrevious = () => submitAnswers().then(goToPreviousQuestion)
 
   return (
-    <div className="m-10 w-full">
-      <ProgressTimer />
-      <div className="text-right italic text-lg flex justify-end">
-        <div className="my-auto">
-          Question {currentQuestionIndex + 1}/{questionsQuantity}
+    <>
+      <FormHeader onPrevious={handlePrevious} loading={loading} onNext={handleNext} />
+      <main>
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8">
+          <div className="bg-white overflow-hidden shadow sm:rounded-lg">
+            <div className="px-4 py-5 sm:p-8">
+              <Question key={currentQuestion.id} question={currentQuestion} onAnswersChange={setUserAnswers} />
+              <ErrorAlert>{error}</ErrorAlert>
+            </div>
+          </div>
         </div>
-        {/* <RiPushpin2Fill className="my-auto ml-2" /> */}
-      </div>
-      <Question key={currentQuestion.id} question={currentQuestion} loading={loading} onNext={handleNext} />
-      <ErrorAlert>{error}</ErrorAlert>
-    </div>
+      </main>
+    </>
   )
 }

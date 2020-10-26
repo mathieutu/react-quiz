@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuiz } from '../context/QuizContext'
-import { formatDurationFromSecToHuman } from '../utils/dates'
+import { formatDurationForHuman } from '../utils/dates'
 import { DURATION } from '../configuration'
 import mayTheForce from '../assets/may-the-force.gif'
 
@@ -23,6 +23,11 @@ export const HomePage = () => {
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out"
             >
               Commencer
+              <svg className="-mr-1 ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+              </svg>
             </button>
           </span>
         </div>
@@ -40,8 +45,8 @@ export const HomePage = () => {
                   Le QCM comporte <strong>{questionsQuantity} questions</strong>.
                 </li>
                 <li>
-                  Vous avez <strong>{formatDurationFromSecToHuman(DURATION)}</strong> pour le terminer,
-                  ce qui fait environ {formatDurationFromSecToHuman(DURATION / questionsQuantity)} par question. <br />
+                  Vous avez <strong>{formatDurationForHuman(DURATION)}</strong> pour le terminer,
+                  ce qui fait environ {formatDurationForHuman(DURATION / questionsQuantity)} par question. <br />
                   Au bout de ce temps, vous ne pourrez plus y accéder. Pensez-donc à jeter un coup d'œil au temps
                   régulièrement.
                 </li>
@@ -49,14 +54,16 @@ export const HomePage = () => {
                   Certaines questions attendent <strong>plusieurs réponses</strong>. <br />
                   Certaines n'en attendent qu'une seule. <br />
                   Il est possible que l'énoncé de la question vous l'indique, mais ce n'est pas obligé. <br />
-                  Vous devez donner <strong>toutes</strong> les bonnes réponses, mais <strong>uniquement</strong> les bonnes réponses pour valider la question.
+                  Vous devez donner <strong>toutes</strong> les bonnes réponses, mais <strong>uniquement</strong> les
+                  bonnes réponses pour valider la question.
                 </li>
                 <li>
                   Dès lors que vous avez choisi votre ou vos réponses pour la question en cours, cliquez sur le bouton
                   "Question suivante" pour sauvegarder votre choix.
                 </li>
                 <li>
-                  Enfin, de la même manière qu'un‧e bon‧ne développeu‧r‧se, doit prendre le temps de lire la documentation
+                  Enfin, de la même manière qu'un‧e bon‧ne développeu‧r‧se, doit prendre le temps de lire la
+                  documentation
                   pour être efficace, pensez à bien lire les énoncés. Il peut y avoir des subtilités !
                 </li>
               </ul>

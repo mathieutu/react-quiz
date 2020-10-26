@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { ProgressBar } from './ProgressBar'
 import { useQuiz } from '../context/QuizContext'
 import { useReRenderComponent } from '../utils/hooks'
+import { formatIntervalForHuman } from '../utils/dates'
 
-export const ProgressTimer = () => {
-  const { endsAt, startedAt, setCurrentQuestionIndex, questionsQuantity } = useQuiz()
+export const Timer = () => {
+  const { endsAt, setCurrentQuestionIndex, questionsQuantity } = useQuiz()
 
   const reRender = useReRenderComponent()
 
@@ -22,7 +22,5 @@ export const ProgressTimer = () => {
     }
   }, [hasTimedOut, questionsQuantity, setCurrentQuestionIndex])
 
-  return (
-    <ProgressBar min={startedAt!} max={endsAt!} currentValue={Date.now()} />
-  )
+  return <span className="tabular-nums">{formatIntervalForHuman(Date.now(), endsAt!)} restantes</span>
 }
