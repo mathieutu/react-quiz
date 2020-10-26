@@ -1,20 +1,25 @@
 import React from 'react'
-import { FaUser } from 'react-icons/all'
 import { useUser } from '../context/UserContext'
+import { Logo, TITLE } from '../configuration'
 
-export default function Header() {
+export const Header = () => {
   const { user } = useUser()
+
   return (
-    <div
-      className="header sticky flex content-around top-0 bg-gradient-to-r from-teal-400 to-blue-500 relative w-full p-2 text-2xl text-white shadow-md"
-    >
-      <div className="flex-1 text-center">QCM - React</div>
-      <div className="flex-1 text-center flex">
-        <div className="mx-auto flex">
-          <FaUser className="my-auto mr-2" />
-          <div className="my-auto">{user!.name}</div>
+    <nav className="bg-white shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex">
+            <div className="flex-shrink-0 flex items-center">
+              <Logo className="h-8 w-auto" />
+              <h1 className="text-lg uppercase leading-9  text-gray-800">{TITLE}</h1>
+            </div>
+          </div>
+          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+            <span className="text-gray-800">{user!.name}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </nav>
   )
 }

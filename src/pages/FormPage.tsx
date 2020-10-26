@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { RiPushpin2Fill } from 'react-icons/all'
 import { useMutation } from '@apollo/client'
 import { Question } from '../component/Question'
 import { NEW_ANSWER_QUERY } from '../utils/queries'
@@ -34,7 +33,7 @@ export const FormPage = () => {
         <div className="my-auto">
           Question {currentQuestionIndex + 1}/{questionsQuantity}
         </div>
-        <RiPushpin2Fill className="my-auto ml-2" />
+        {/* <RiPushpin2Fill className="my-auto ml-2" /> */}
       </div>
       <Question key={currentQuestion.id} question={currentQuestion} loading={loading} onNext={handleNext} />
       <ErrorAlert>{error}</ErrorAlert>

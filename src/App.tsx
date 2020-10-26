@@ -1,6 +1,6 @@
 import React from 'react'
 import './assets/css/App.css'
-import Header from './component/Header'
+import { Header } from './component/Header'
 import { HomePage } from './pages/HomePage'
 import { FormPage } from './pages/FormPage'
 import { LoginPage } from './pages/LoginPage'
@@ -30,11 +30,11 @@ export const App = () => {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-100">
       <Header />
-      <div className="container shadow-lg flex mx-auto bg-white h-full">
+      <div className="py-10">
         <AppContent />
       </div>
-    </>
+    </div>
   )
 }

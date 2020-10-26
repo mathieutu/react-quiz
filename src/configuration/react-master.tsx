@@ -13,7 +13,7 @@ export const Logo = (props: {className: string}) => (
 
 export const TITLE = 'Test React Master'
 
-export const DURATION = 6000
+export const DURATION = 6007
 
 export const QUESTIONS: Question[] = [
   {

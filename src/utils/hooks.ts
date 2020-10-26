@@ -8,7 +8,13 @@ export const useLocalStorageState = <T>(key: string, initialValue: T): [T, SetSt
   const [value, setValue] = useState<T>(() => {
     const storedValue = window.localStorage.getItem(prefixedKey)
 
-    return storedValue !== null ? JSON.parse(storedValue) : initialValue
+    if (storedValue === null) return initialValue
+
+    try {
+      return JSON.parse(storedValue)
+    } catch (e) {
+      return initialValue
+    }
   })
 
   useEffect(() => {

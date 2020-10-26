@@ -11,18 +11,10 @@ module.exports = {
     './src/**/*.tsx',
   ],
   theme: {
-    extend: {
-      gradientColorStops: {
-        'back-light': '#27427b',
-        'back-dark': '#111838',
-      },
-      width: {
-        '100': '30rem',
-      },
-    },
+    extend: {},
   },
-  variants: {
-    borderRadius: ['responsive', 'hover', 'focus'],
-  },
-  plugins: [],
+  variants: {},
+  plugins: [
+    require('@tailwindcss/ui'),
+  ],
 }
