@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { ErrorAlert } from '../component/ErrorAlert'
+import { ErrorAlert } from './ErrorAlert'
 import { useUser } from '../context/UserContext'
 import { Logo, TITLE } from '../configuration'
-import { LoadingIcon } from '../component/LoadingIcon'
+import { LoadingIcon } from './LoadingIcon'
 import { useInsertUser } from '../graphql'
 
 export const LoginPage = () => {

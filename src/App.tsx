@@ -1,12 +1,12 @@
 import React from 'react'
 import './assets/css/App.css'
-import { Header } from './component/Header'
-import { HomePage } from './pages/HomePage'
-import { FormPage } from './pages/FormPage'
-import { LoginPage } from './pages/LoginPage'
+import { Header } from './components/Header'
+import { HomePage } from './components/HomePage'
+import { FormPage } from './components/FormPage'
+import { LoginPage } from './components/LoginPage'
 import { useUser } from './context/UserContext'
 import { useQuiz } from './context/QuizContext'
-import { EndPage } from './pages/EndPage'
+import { EndPage } from './components/EndPage'
 
 const AppContent = () => {
   const { startedAt, currentQuestion } = useQuiz()

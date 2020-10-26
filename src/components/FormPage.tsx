@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Question } from '../component/Question'
-import { ErrorAlert } from '../component/ErrorAlert'
+import { Question } from './Question'
+import { ErrorAlert } from './ErrorAlert'
 import { useQuiz } from '../context/QuizContext'
-import { FormHeader } from '../component/FormHeader'
+import { FormHeader } from './FormHeader'
 import { useCurrentAnswers } from '../graphql'
 
 export const FormPage = () => {
