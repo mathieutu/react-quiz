@@ -7,7 +7,10 @@ export const formatIntervalForHuman = (start: number, end: number) => {
   const delimiter = '[DEL]'
   const durationArray = formatDuration(interval, { locale, delimiter }).split(delimiter)
 
-  return `${durationArray.slice(0, -1).join(', ')} et ${durationArray.slice(-1)}`
+  const firstsElements = durationArray.slice(0, -1).join(', ')
+  const last = durationArray.slice(-1)
+
+  return `${firstsElements} ${firstsElements ? 'et' : ''} ${last}`
 }
 
 export const formatDurationForHuman = (duration: number) => formatIntervalForHuman(0, duration * 1000)
