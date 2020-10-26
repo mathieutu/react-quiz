@@ -3,13 +3,14 @@ import type { Question as QuestionType } from '../configuration'
 
 type QuestionProps = {
   question: QuestionType,
-  onAnswersChange: (setFunction: (userAnswers: string[]) => string[]) => void,
+  onAnswersChange: (setFunction: (answers: string[]) => string[]) => void,
+  answers: string[],
 }
 
-export const Question = ({ question, onAnswersChange }: QuestionProps) => {
+export const Question = ({ question, onAnswersChange, answers }: QuestionProps) => {
   const handleResponseChange = ({ target: { value, checked } }: ChangeEvent<HTMLInputElement>) => {
-    onAnswersChange(answers => {
-      const uniqueAnswers = new Set(answers)
+    onAnswersChange(oldAnswers => {
+      const uniqueAnswers = new Set(oldAnswers)
 
       if (checked) uniqueAnswers.add(value)
       else uniqueAnswers.delete(value)
@@ -27,7 +28,7 @@ export const Question = ({ question, onAnswersChange }: QuestionProps) => {
           <label className="ml-2 cursor-pointer">
             <input
               type="checkbox"
-              defaultChecked={false}
+              checked={answers.includes(key)}
               className="cursor-pointer my-auto"
               value={key}
               onChange={handleResponseChange}
