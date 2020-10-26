@@ -27,5 +27,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /src/assets/css/tailwind.css
-
+/src/graphql/.graphqlconfig
 

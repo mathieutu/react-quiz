@@ -1,31 +1,28 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { useMutation } from '@apollo/client'
-import { NEW_USER_MUTATION } from '../utils/queries'
 import { ErrorAlert } from '../component/ErrorAlert'
 import { useUser } from '../context/UserContext'
 import { Logo, TITLE } from '../configuration'
 import { LoadingIcon } from '../component/LoadingIcon'
+import { useInsertUser } from '../graphql'
 
 export const LoginPage = () => {
-  const [formState, setFormState] = useState({ name: '', email: '' })
+  const [userInput, setUserInput] = useState({ name: '', email: '' })
   const [formError, setFormError] = useState<string>('')
-
-  const [addUser, { loading }] = useMutation(NEW_USER_MUTATION)
-
+  const { insertUser, loading } = useInsertUser()
   const { setUser } = useUser()
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormState(state => ({
+  const handleChange = ({ target: { name, value } }: ChangeEvent<HTMLInputElement>) => {
+    setUserInput(state => ({
       ...state,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }))
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
 
-    addUser({ variables: formState })
-      .then(({ data }) => setUser(data.addUser))
+    insertUser(userInput)
+      .then(({ data }) => setUser(data?.user!))
       .catch(({ message }) => setFormError(message))
   }
 

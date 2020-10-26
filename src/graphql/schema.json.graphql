@@ -1,0 +1,465 @@
+# This file was generated based on "schema.json". Do not edit manually.
+
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"columns and relationships of \"answers\""
+type answers {
+  answers(
+    "JSON select path"
+    path: String
+  ): jsonb!
+  id: uuid!
+  question_id: String!
+  "An object relationship"
+  user: users!
+  user_id: uuid!
+}
+
+"response of any mutation on the table \"answers\""
+type answers_mutation_response {
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [answers!]!
+}
+
+"mutation root"
+type mutation_root {
+  "insert a single row into the table: \"answers\""
+  addAnswer(
+    "the row to be inserted"
+    object: answers_insert_input!,
+    "on conflict condition"
+    on_conflict: answers_on_conflict
+  ): answers
+  "insert a single row into the table: \"users\""
+  addUser(
+    "the row to be inserted"
+    object: users_insert_input!,
+    "on conflict condition"
+    on_conflict: users_on_conflict
+  ): users
+  "insert data into the table: \"answers\""
+  insert_answers(
+    "the rows to be inserted"
+    objects: [answers_insert_input!]!,
+    "on conflict condition"
+    on_conflict: answers_on_conflict
+  ): answers_mutation_response
+  "insert data into the table: \"users\""
+  insert_users(
+    "the rows to be inserted"
+    objects: [users_insert_input!]!,
+    "on conflict condition"
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+  "update data of the table: \"answers\""
+  update_answers(
+    "append existing jsonb value of filtered columns with new jsonb value"
+    _append: answers_append_input,
+    "delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
+    _delete_at_path: answers_delete_at_path_input,
+    "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
+    _delete_elem: answers_delete_elem_input,
+    "delete key/value pair or string element. key/value pairs are matched based on their key value"
+    _delete_key: answers_delete_key_input,
+    "prepend existing jsonb value of filtered columns with new jsonb value"
+    _prepend: answers_prepend_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: answers_set_input,
+    "filter the rows which have to be updated"
+    where: answers_bool_exp!
+  ): answers_mutation_response
+  "update single row of the table: \"answers\""
+  update_answers_by_pk(
+    "append existing jsonb value of filtered columns with new jsonb value"
+    _append: answers_append_input,
+    "delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
+    _delete_at_path: answers_delete_at_path_input,
+    "delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
+    _delete_elem: answers_delete_elem_input,
+    "delete key/value pair or string element. key/value pairs are matched based on their key value"
+    _delete_key: answers_delete_key_input,
+    "prepend existing jsonb value of filtered columns with new jsonb value"
+    _prepend: answers_prepend_input,
+    "sets the columns of the filtered rows to the given values"
+    _set: answers_set_input,
+    pk_columns: answers_pk_columns_input!
+  ): answers
+  "update data of the table: \"users\""
+  update_users(
+    "sets the columns of the filtered rows to the given values"
+    _set: users_set_input,
+    "filter the rows which have to be updated"
+    where: users_bool_exp!
+  ): users_mutation_response
+  "update single row of the table: \"users\""
+  update_users_by_pk(
+    "sets the columns of the filtered rows to the given values"
+    _set: users_set_input,
+    pk_columns: users_pk_columns_input!
+  ): users
+}
+
+"query root"
+type query_root {
+  "fetch data from the table: \"answers\""
+  answers(
+    "distinct select on columns"
+    distinct_on: [answers_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [answers_order_by!],
+    "filter the rows returned"
+    where: answers_bool_exp
+  ): [answers!]!
+  "fetch data from the table: \"answers\" using primary key columns"
+  answers_by_pk(id: uuid!): answers
+  "fetch data from the table: \"users\""
+  users(
+    "distinct select on columns"
+    distinct_on: [users_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [users_order_by!],
+    "filter the rows returned"
+    where: users_bool_exp
+  ): [users!]!
+  "fetch data from the table: \"users\" using primary key columns"
+  users_by_pk(id: uuid!): users
+}
+
+"subscription root"
+type subscription_root {
+  "fetch data from the table: \"answers\""
+  answers(
+    "distinct select on columns"
+    distinct_on: [answers_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [answers_order_by!],
+    "filter the rows returned"
+    where: answers_bool_exp
+  ): [answers!]!
+  "fetch data from the table: \"answers\" using primary key columns"
+  answers_by_pk(id: uuid!): answers
+  "fetch data from the table: \"users\""
+  users(
+    "distinct select on columns"
+    distinct_on: [users_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [users_order_by!],
+    "filter the rows returned"
+    where: users_bool_exp
+  ): [users!]!
+  "fetch data from the table: \"users\" using primary key columns"
+  users_by_pk(id: uuid!): users
+}
+
+"columns and relationships of \"users\""
+type users {
+  "An array relationship"
+  answers(
+    "distinct select on columns"
+    distinct_on: [answers_select_column!],
+    "limit the number of rows returned"
+    limit: Int,
+    "skip the first n rows. Use only with order_by"
+    offset: Int,
+    "sort the rows by one or more columns"
+    order_by: [answers_order_by!],
+    "filter the rows returned"
+    where: answers_bool_exp
+  ): [answers!]!
+  email: String!
+  id: uuid!
+  name: String!
+}
+
+"response of any mutation on the table \"users\""
+type users_mutation_response {
+  "number of affected rows by the mutation"
+  affected_rows: Int!
+  "data of the affected rows by the mutation"
+  returning: [users!]!
+}
+
+"unique or primary key constraints on table \"answers\""
+enum answers_constraint {
+  "unique or primary key constraint"
+  answers_pkey
+  "unique or primary key constraint"
+  answers_user_id_question_id_key
+}
+
+"select columns of table \"answers\""
+enum answers_select_column {
+  "column name"
+  answers
+  "column name"
+  id
+  "column name"
+  question_id
+  "column name"
+  user_id
+}
+
+"update columns of table \"answers\""
+enum answers_update_column {
+  "column name"
+  answers
+}
+
+"column ordering options"
+enum order_by {
+  "in the ascending order, nulls last"
+  asc
+  "in the ascending order, nulls first"
+  asc_nulls_first
+  "in the ascending order, nulls last"
+  asc_nulls_last
+  "in the descending order, nulls first"
+  desc
+  "in the descending order, nulls first"
+  desc_nulls_first
+  "in the descending order, nulls last"
+  desc_nulls_last
+}
+
+"unique or primary key constraints on table \"users\""
+enum users_constraint {
+  "unique or primary key constraint"
+  users_email_key
+  "unique or primary key constraint"
+  users_pkey
+}
+
+"select columns of table \"users\""
+enum users_select_column {
+  "column name"
+  email
+  "column name"
+  id
+  "column name"
+  name
+}
+
+"update columns of table \"users\""
+enum users_update_column {
+  "column name"
+  name
+}
+
+"expression to compare columns of type String. All fields are combined with logical 'AND'."
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+"append existing jsonb value of filtered columns with new jsonb value"
+input answers_append_input {
+  answers: jsonb
+}
+
+"input type for inserting array relation for remote table \"answers\""
+input answers_arr_rel_insert_input {
+  data: [answers_insert_input!]!
+  on_conflict: answers_on_conflict
+}
+
+"Boolean expression to filter rows from the table \"answers\". All fields are combined with a logical 'AND'."
+input answers_bool_exp {
+  _and: [answers_bool_exp]
+  _not: answers_bool_exp
+  _or: [answers_bool_exp]
+  answers: jsonb_comparison_exp
+  id: uuid_comparison_exp
+  question_id: String_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"delete the field or element with specified path (for JSON arrays, negative integers count from the end)"
+input answers_delete_at_path_input {
+  answers: [String]
+}
+
+"delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array"
+input answers_delete_elem_input {
+  answers: Int
+}
+
+"delete key/value pair or string element. key/value pairs are matched based on their key value"
+input answers_delete_key_input {
+  answers: String
+}
+
+"input type for inserting data into table \"answers\""
+input answers_insert_input {
+  answers: jsonb
+  question_id: String
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"input type for inserting object relation for remote table \"answers\""
+input answers_obj_rel_insert_input {
+  data: answers_insert_input!
+  on_conflict: answers_on_conflict
+}
+
+"on conflict condition type for table \"answers\""
+input answers_on_conflict {
+  constraint: answers_constraint!
+  update_columns: [answers_update_column!]!
+  where: answers_bool_exp
+}
+
+"ordering options when selecting data from \"answers\""
+input answers_order_by {
+  answers: order_by
+  id: order_by
+  question_id: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"primary key columns input for table: \"answers\""
+input answers_pk_columns_input {
+  id: uuid!
+}
+
+"prepend existing jsonb value of filtered columns with new jsonb value"
+input answers_prepend_input {
+  answers: jsonb
+}
+
+"input type for updating data in table \"answers\""
+input answers_set_input {
+  answers: jsonb
+}
+
+"expression to compare columns of type jsonb. All fields are combined with logical 'AND'."
+input jsonb_comparison_exp {
+  "is the column contained in the given json value"
+  _contained_in: jsonb
+  "does the column contain the given json value at the top level"
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+  "does the string exist as a top-level key in the column"
+  _has_key: String
+  "do all of these strings exist as top-level keys in the column"
+  _has_keys_all: [String!]
+  "do any of these strings exist as top-level keys in the column"
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
+"input type for inserting array relation for remote table \"users\""
+input users_arr_rel_insert_input {
+  data: [users_insert_input!]!
+  on_conflict: users_on_conflict
+}
+
+"Boolean expression to filter rows from the table \"users\". All fields are combined with a logical 'AND'."
+input users_bool_exp {
+  _and: [users_bool_exp]
+  _not: users_bool_exp
+  _or: [users_bool_exp]
+  answers: answers_bool_exp
+  email: String_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+}
+
+"input type for inserting data into table \"users\""
+input users_insert_input {
+  answers: answers_arr_rel_insert_input
+  email: String
+  name: String
+}
+
+"input type for inserting object relation for remote table \"users\""
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+  on_conflict: users_on_conflict
+}
+
+"on conflict condition type for table \"users\""
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]!
+  where: users_bool_exp
+}
+
+"ordering options when selecting data from \"users\""
+input users_order_by {
+  email: order_by
+  id: order_by
+  name: order_by
+}
+
+"primary key columns input for table: \"users\""
+input users_pk_columns_input {
+  id: uuid!
+}
+
+"input type for updating data in table \"users\""
+input users_set_input {
+  name: String
+}
+
+"expression to compare columns of type uuid. All fields are combined with logical 'AND'."
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
+
+scalar jsonb
+
+scalar uuid

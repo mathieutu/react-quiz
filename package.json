@@ -9,7 +9,8 @@
     "build": "react-scripts build",
     "lint": "eslint '**/*.{ts*, js}' --fix",
     "typecheck": "tsc --noEmit",
-    "build:css": "postcss node_modules/tailwindcss/tailwind.css -o src/assets/css/tailwind.css"
+    "build:css": "postcss node_modules/tailwindcss/tailwind.css -o src/assets/css/tailwind.css",
+    "generate:graphql": "graphql-codegen -r dotenv/config"
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
@@ -20,6 +21,12 @@
     "react-scripts": "^4.0.0"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^2.0.1",
+    "@graphql-codegen/cli": "^1.19.0",
+    "@graphql-codegen/introspection": "^1.18.0",
+    "@graphql-codegen/typescript": "^1.17.11",
+    "@graphql-codegen/typescript-operations": "^1.17.8",
+    "@graphql-codegen/typescript-react-apollo": "^2.0.7",
     "@tailwindcss/ui": "^0.6.2",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.0",

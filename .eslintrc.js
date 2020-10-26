@@ -1,6 +1,6 @@
 module.exports = {
   parserOptions: {
-    project: './tsconfig.json',
+    project: './tsconfig.eslint.json',
   },
   extends: [
     'react-app',
@@ -26,4 +26,13 @@ module.exports = {
     semi: ['error', 'never'],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
+  'overrides': [
+    {
+      'files': ['./*.js'],
+      'rules': {
+        'global-require': 'off',
+        'import/no-extraneous-dependencies': 'off',
+      },
+    },
+  ],
 }

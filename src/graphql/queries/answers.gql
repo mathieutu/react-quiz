@@ -1,0 +1,18 @@
+query GetAnswer($questionId: String, $userId: uuid) {
+  answers(where: {question_id: {_eq: $questionId}, user_id: {_eq: $userId}}) {
+    id
+    answers
+  }
+}
+
+mutation AddAnswer($answers: jsonb, $questionId: String, $userId: uuid) {
+  addAnswer(
+    object: {answers: $answers, question_id: $questionId, user_id: $userId},
+    on_conflict: {constraint: answers_user_id_question_id_key, update_columns: answers}
+  ) {
+    id
+    answers
+  }
+}
+
+
