@@ -12,7 +12,7 @@ export const Logo = (props: { className: string }) => (
   </svg>
 )
 
-export const TITLE = 'Test Exemple'
+export const TITLE = 'Quiz Exemple'
 
 export const DURATION = 6007
 

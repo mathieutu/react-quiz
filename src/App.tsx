@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './assets/css/App.css'
 import { Header } from './components/Header'
 import { HomePage } from './components/HomePage'
@@ -7,6 +7,7 @@ import { LoginPage } from './components/LoginPage'
 import { useUser } from './context/UserContext'
 import { useQuiz } from './context/QuizContext'
 import { EndPage } from './components/EndPage'
+import { TITLE } from './configuration'
 
 const AppContent = () => {
   const { startedAt, currentQuestion } = useQuiz()
@@ -24,6 +25,10 @@ const AppContent = () => {
 
 export const App = () => {
   const { user } = useUser()
+
+  useEffect(() => {
+    document.title = TITLE
+  }, [])
 
   if (!user) {
     return <LoginPage />

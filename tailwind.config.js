@@ -10,9 +10,7 @@ module.exports = {
     './src/**/*.jsx',
     './src/**/*.tsx',
   ],
-  theme: {
-    extend: {},
-  },
+  theme: { extend: {} },
   variants: {},
   plugins: [
     require('@tailwindcss/ui'),

@@ -1,14 +1,25 @@
 import React from 'react'
 import { useQuiz } from '../context/QuizContext'
+import slow from '../assets/slow.gif'
+import victory from '../assets/victory.gif'
 
 const Message = () => {
   const { endsAt } = useQuiz()
 
   if (Date.now() >= endsAt!) {
-    return <>Le temps est écoulé, les réponses envoyées ont bien été enregistrées.</>
+    return (
+      <div>
+        Désolé, le temps est écoulé, mais les réponses envoyées ont bien été enregistrées.
+        <img className="rounded-md w-full h-auto mt-5" src={slow} alt="" />
+      </div>
+    )
   }
 
-  return <>Merci, les réponses ont été enregistrées.</>
+  return (
+    <div>Les réponses ont bien été enregistrées !
+      <img className="rounded-md w-full h-auto mt-5" src={victory} alt="" />
+    </div>
+  )
 }
 
 const Icon = () => {
