@@ -6,4 +6,6 @@ export type Question = {
   possibleAnswers: { key: string, label: string, disabled?: boolean }[]
 }
 
-export * from './react-master'
+// export * from './react-master'
+
+export * from './example'
