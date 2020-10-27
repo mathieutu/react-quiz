@@ -2,7 +2,7 @@ import React from 'react'
 import './assets/css/App.css'
 import { Header } from './components/Header'
 import { HomePage } from './components/HomePage'
-import { FormPage } from './components/FormPage'
+import { QuizPage } from './components/QuizPage'
 import { LoginPage } from './components/LoginPage'
 import { useUser } from './context/UserContext'
 import { useQuiz } from './context/QuizContext'
@@ -19,7 +19,7 @@ const AppContent = () => {
     return <EndPage />
   }
 
-  return <FormPage />
+  return <QuizPage />
 }
 
 export const App = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { useQuiz } from '../context/QuizContext'
-import { useReRenderComponent } from '../utils/hooks'
-import { formatIntervalForHuman } from '../utils/dates'
+import { useQuiz } from '../../context/QuizContext'
+import { useReRenderComponent } from '../../utils/hooks'
+import { formatIntervalForHuman } from '../../utils/dates'
 
 export const Timer = () => {
   const { endsAt, setCurrentQuestionIndex, questionsQuantity } = useQuiz()

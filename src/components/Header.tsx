@@ -12,7 +12,7 @@ export const Header = () => {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Logo className="h-8 w-auto" />
-              <h1 className="text-lg uppercase leading-9  text-gray-800">{TITLE}</h1>
+              <h1 className="text-lg uppercase leading-9 text-gray-800">{TITLE}</h1>
             </div>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
