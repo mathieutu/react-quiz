@@ -51,6 +51,10 @@ export const HomePage = () => {
                   régulièrement.
                 </li>
                 <li>
+                  Les questions et leurs réponses sont dans un ordre <strong>complètement aléatoire</strong>.
+                  Inutile d'y voir un quelconque lien, elles sont toutes indépendantes.
+                </li>
+                <li>
                   Certaines questions attendent <strong>plusieurs réponses</strong>. <br />
                   Certaines n'en attendent qu'une seule. <br />
                   Il est possible que l'énoncé de la question vous l'indique, mais ce n'est pas obligé. <br />
@@ -62,9 +66,16 @@ export const HomePage = () => {
                   "Question suivante" pour sauvegarder votre choix.
                 </li>
                 <li>
+                  Vous pouvez revenir aux questions d'avants via le bouton "Question précédente". <br />
+                  Attention, ce bouton sauvegarde aussi votre choix pour la question en cours.
+                </li>
+                <li>
+                  Dès que vous avez cliqué sur "Terminer", le test est fini, et vous ne pouvez plus revenir aux questions.
+                </li>
+                <li>
                   Enfin, de la même manière qu'un‧e bon‧ne développeu‧r‧se, doit prendre le temps de lire la
-                  documentation
-                  pour être efficace, pensez à bien lire les énoncés. Il peut y avoir des subtilités !
+                  documentation pour être efficace, pensez à bien lire les énoncés. <br />
+                  Il peut y avoir des subtilités !
                 </li>
               </ul>
               <p className="mt-10">Bon test à tou‧te‧s !</p>

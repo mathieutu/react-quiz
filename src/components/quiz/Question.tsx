@@ -1,5 +1,6 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useMemo } from 'react'
 import type { Question as QuestionType } from '../../configuration'
+import { sortRandom } from '../../utils/misc'
 
 type QuestionProps = {
   question: QuestionType,
@@ -47,11 +48,13 @@ export const Question = ({ question, onAnswersChange, answers }: QuestionProps) 
     })
   }
 
+  const sortedAnswers = useMemo(() => sortRandom(question.possibleAnswers), [question.possibleAnswers])
+
   return (
     <div className="ml-4">
       <div>{question.title}</div>
       <div className="flex gap-3 flex-wrap mt-10">
-        {question.possibleAnswers.map(({ key, label, disabled = false }) => (
+        {sortedAnswers.map(({ key, label, disabled = false }) => (
           <div key={key} className="flex text-lg">
             <InputCheckbox disabled={disabled} checked={answers.includes(key)} value={key} onChange={handleResponseChange} label={label} />
           </div>

@@ -78,14 +78,14 @@ const NextButton = ({ loading, onClick, isLastQuestion }: NextButtonProps) => {
 }
 
 export const FormHeader = ({ loading, onPrevious, onNext }: FormHeaderProps) => {
-  const { currentQuestionIndex, questionsQuantity } = useQuiz()
+  const { currentQuestionIndex, questionsQuantity, currentQuestion } = useQuiz()
 
   const questionsLeftQuantity = questionsQuantity - currentQuestionIndex
 
   return (
     <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:flex md:items-center md:justify-between">
       <div className="flex-1 min-w-0">
-        <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+        <h2 title={currentQuestion.id} className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
           Question n° {currentQuestionIndex + 1}
         </h2>
         <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap">

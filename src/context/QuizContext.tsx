@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { useAndAssertContext, useLocalStorageState } from '../utils/hooks'
 import { DURATION, Question, QUESTIONS } from '../configuration'
+import { sortRandom } from '../utils/misc'
 
 type QuizContext = {
   startedAt: number | null,
@@ -19,7 +20,11 @@ const quizContext = React.createContext<QuizContext | undefined>(undefined)
 
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const [startedAt, setStartedAt] = useLocalStorageState<number | null>('startedAt', null)
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useLocalStorageState<number>('currentQuestionId', 0)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useLocalStorageState('currentQuestionId', 0)
+  const [questionsOrder] = useLocalStorageState('questions', () => sortRandom(QUESTIONS.map(({ id }) => id)))
+
+  const currentQuestionId = questionsOrder[currentQuestionIndex]
+  const currentQuestion = QUESTIONS.find(({ id }) => id === currentQuestionId)!
 
   const context: QuizContext = {
     startedAt,
@@ -30,7 +35,7 @@ export const QuizProvider = ({ children }: { children: ReactNode }) => {
     },
 
     currentQuestionIndex,
-    currentQuestion: QUESTIONS[currentQuestionIndex],
+    currentQuestion,
     questionsQuantity: QUESTIONS.length,
     setCurrentQuestionIndex,
     goToNextQuestion: () => setCurrentQuestionIndex(i => i + 1),

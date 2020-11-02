@@ -2,18 +2,20 @@ import { Context, Dispatch, SetStateAction, useContext, useEffect, useState } fr
 
 export type SetState<T> = Dispatch<SetStateAction<T>>
 
-export const useLocalStorageState = <T>(key: string, initialValue: T): [T, SetState<T>] => {
+const getValue = <T>(value: T | (() => T)): T => (typeof value === 'function' ? (value as () => T)() : value)
+
+export const useLocalStorageState = <T>(key: string, initialValue: T | (() => T)): [T, SetState<T>] => {
   const prefixedKey = `qcm:${key}`
 
   const [value, setValue] = useState<T>(() => {
     const storedValue = window.localStorage.getItem(prefixedKey)
 
-    if (storedValue === null) return initialValue
+    if (storedValue === null) return getValue(initialValue)
 
     try {
       return JSON.parse(storedValue)
     } catch (e) {
-      return initialValue
+      return getValue(initialValue)
     }
   })
 

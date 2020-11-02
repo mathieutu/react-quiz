@@ -29,3 +29,6 @@ yarn-error.log*
 /src/assets/css/tailwind.css
 /src/graphql/.graphqlconfig
 
+
+# Local Netlify folder
+.netlify
