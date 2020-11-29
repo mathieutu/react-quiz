@@ -40,7 +40,7 @@ function PreviousButton({ loading, onClick }: { onClick: () => void, loading: bo
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className="inline-flex items-center px-4 py-2 border border-gray-300 text-xs sm:text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out"
+        className="inline-flex items-center px-4 py-2 border border-gray-300 text-xs sm:text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:ring-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out"
       >
         <LoadingIcon loading={shouldLoad} className="-ml-1 mr-2 h-5 w-5 text-gray-500">
           <svg className="-ml-1 mr-2 h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,7 +64,7 @@ const NextButton = ({ loading, onClick, isLastQuestion }: NextButtonProps) => {
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-xs sm:text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out"
+        className="inline-flex items-center px-4 py-2 border border-transparent text-xs sm:text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out"
       >
         {isLastQuestion ? 'Terminer' : 'Question suivante'}
         <LoadingIcon loading={shouldLoad} className="-mr-1 ml-2 h-5 w-5">

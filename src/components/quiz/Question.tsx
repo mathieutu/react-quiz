@@ -22,14 +22,14 @@ const InputCheckbox = ({ checked, label, onChange, value, disabled }: InputCheck
     : `text-indigo-700 bg-indigo-100 ${disabled ? '' : 'hover:bg-indigo-200 focus:border-indigo-600 active:bg-indigo-400 active:text-white'}`
 
   return (
-    <label className={`${className} ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md focus:outline-none  focus:shadow-outline-indigo`}>
+    <label className={`${className} ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md focus:outline-none  focus:ring-indigo`}>
       <input
         disabled={disabled}
         type="checkbox"
         checked={checked}
         value={value}
         onChange={onChange}
-        className="form-checkbox border-indigo-700 bg-indigo-200 h-4 w-4 -ml-1 mr-2 text-indigo-800 transition duration-150 ease-in-out"
+        className="rounded border-indigo-700 bg-indigo-200 h-4 w-4 -ml-1 mr-2 text-indigo-800 transition duration-150 ease-in-out"
       />
       {label}
     </label>
