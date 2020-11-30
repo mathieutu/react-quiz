@@ -8,17 +8,17 @@ const Message = () => {
 
   if (Date.now() >= endsAt!) {
     return (
-      <div>
+      <p>
         Désolé, le temps est écoulé, mais les réponses envoyées ont bien été enregistrées.
         <img className="rounded-md w-full h-auto mt-5" src={slow} alt="" />
-      </div>
+      </p>
     )
   }
 
   return (
-    <div>Les réponses ont bien été enregistrées !
+    <p>Les réponses ont bien été enregistrées !
       <img className="rounded-md w-full h-auto mt-5" src={victory} alt="" />
-    </div>
+    </p>
   )
 }
 
@@ -60,9 +60,9 @@ export const EndPage = () => {
               C'est fini !
             </h2>
             <div className="mt-2">
-              <p className="text-sm leading-5 text-gray-500">
+              <div className="text-sm leading-5 text-gray-500">
                 <Message />
-              </p>
+              </div>
             </div>
           </div>
         </div>
