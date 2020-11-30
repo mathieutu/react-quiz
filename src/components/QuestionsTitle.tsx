@@ -10,11 +10,17 @@ SyntaxHighlighter.registerLanguage('jsx', jsx)
 
 delete prism.operator.background
 
-export const CodeBlock = ({ code }: { code: string }) => (
-  <SyntaxHighlighter showLineNumbers language="jsx" style={prism} customStyle={{ borderRadius: '0.5rem' }}>
-    {code.trim()}
-  </SyntaxHighlighter>
-)
+export const CodeBlock = ({ code }: { code: string }) => {
+  const lines = code.split('\n')
+
+  const spacesCountOfFirstLine = lines[1].length - lines[1].trimLeft().length
+
+  return (
+    <SyntaxHighlighter showLineNumbers language="jsx" style={prism} customStyle={{ borderRadius: '0.5rem' }}>
+      {lines.map(line => line.slice(spacesCountOfFirstLine)).join('\n').trim()}
+    </SyntaxHighlighter>
+  )
+}
 
 export const Code = ({ children }: { children: string }) => (
   <span className="bg-gray-200 text-gray-700 py-px rounded font-mono font-normal tracking-tighter">

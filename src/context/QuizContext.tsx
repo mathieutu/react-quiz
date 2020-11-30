@@ -21,7 +21,12 @@ const quizContext = React.createContext<QuizContext | undefined>(undefined)
 export const QuizProvider = ({ children }: { children: ReactNode }) => {
   const [startedAt, setStartedAt] = useLocalStorageState<number | null>('startedAt', null)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useLocalStorageState('currentQuestionId', 0)
-  const [questionsOrder] = useLocalStorageState('questions', () => sortRandom(QUESTIONS.map(({ id }) => id)))
+  const [isDev] = useLocalStorageState('dev', process.env.NODE_ENV !== 'production')
+  const [questionsOrder] = useLocalStorageState('questions', () => {
+    const ids = QUESTIONS.map(({ id }) => id)
+
+    return isDev ? ids : sortRandom(ids)
+  })
 
   const currentQuestionId = questionsOrder[currentQuestionIndex]
   const currentQuestion = QUESTIONS.find(({ id }) => id === currentQuestionId)!
