@@ -1309,6 +1309,43 @@
             "deprecationReason": null
           },
           {
+            "name": "updateUser",
+            "description": "update single row of the table: \"users\"",
+            "args": [
+              {
+                "name": "_set",
+                "description": "sets the columns of the filtered rows to the given values",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "users_set_input",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "pk_columns",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "users_pk_columns_input",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "users",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "update_answers",
             "description": "update data of the table: \"answers\"",
             "args": [
@@ -1514,43 +1551,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "users_mutation_response",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "update_users_by_pk",
-            "description": "update single row of the table: \"users\"",
-            "args": [
-              {
-                "name": "_set",
-                "description": "sets the columns of the filtered rows to the given values",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "users_set_input",
-                  "ofType": null
-                },
-                "defaultValue": null
-              },
-              {
-                "name": "pk_columns",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "users_pk_columns_input",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null
-              }
-            ],
-            "type": {
-              "kind": "OBJECT",
-              "name": "users",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2104,6 +2104,133 @@
         "possibleTypes": null
       },
       {
+        "kind": "SCALAR",
+        "name": "timestamptz",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "timestamptz_comparison_exp",
+        "description": "expression to compare columns of type timestamptz. All fields are combined with logical 'AND'.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "_eq",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "_gt",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "_gte",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "_in",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "timestamptz",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "_is_null",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "_lt",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "_lte",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "_neq",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "_nin",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "timestamptz",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "users",
         "description": "columns and relationships of \"users\"",
@@ -2211,6 +2338,18 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "finished_at",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2361,6 +2500,16 @@
             "defaultValue": null
           },
           {
+            "name": "finished_at",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "timestamptz_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
             "name": "id",
             "description": null,
             "type": {
@@ -2430,6 +2579,16 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "finished_at",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
               "ofType": null
             },
             "defaultValue": null
@@ -2609,6 +2768,16 @@
             "defaultValue": null
           },
           {
+            "name": "finished_at",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
             "name": "id",
             "description": null,
             "type": {
@@ -2673,6 +2842,12 @@
             "deprecationReason": null
           },
           {
+            "name": "finished_at",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": "column name",
             "isDeprecated": false,
@@ -2693,6 +2868,16 @@
         "description": "input type for updating data in table \"users\"",
         "fields": null,
         "inputFields": [
+          {
+            "name": "finished_at",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "timestamptz",
+              "ofType": null
+            },
+            "defaultValue": null
+          },
           {
             "name": "name",
             "description": null,
@@ -2716,6 +2901,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
+          {
+            "name": "finished_at",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "name",
             "description": "column name",
@@ -3125,7 +3316,18 @@
           {
             "name": "inputFields",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "includeDeprecated",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": "false"
+              }
+            ],
             "type": {
               "kind": "LIST",
               "name": null,
@@ -3255,7 +3457,18 @@
           {
             "name": "args",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "includeDeprecated",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": "false"
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -3378,6 +3591,34 @@
           {
             "name": "defaultValue",
             "description": "A GraphQL-formatted string representing the default value for this input value.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isDeprecated",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "deprecationReason",
+            "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3691,32 +3932,6 @@
     ],
     "directives": [
       {
-        "name": "skip",
-        "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
-        "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
-        "args": [
-          {
-            "name": "if",
-            "description": "Skipped when true.",
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            "defaultValue": null
-          }
-        ]
-      },
-      {
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "isRepeatable": false,
@@ -3743,11 +3958,39 @@
         ]
       },
       {
+        "name": "skip",
+        "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
+        "isRepeatable": false,
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
+        "args": [
+          {
+            "name": "if",
+            "description": "Skipped when true.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ]
+      },
+      {
         "name": "deprecated",
         "description": "Marks an element of a GraphQL schema as no longer supported.",
         "isRepeatable": false,
         "locations": [
           "FIELD_DEFINITION",
+          "ARGUMENT_DEFINITION",
+          "INPUT_FIELD_DEFINITION",
           "ENUM_VALUE"
         ],
         "args": [

@@ -1,7 +1,10 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from 'react'
 import { useQuiz } from '../context/QuizContext'
 import slow from '../assets/slow.gif'
 import victory from '../assets/victory.gif'
+import { useFinishQuiz } from '../graphql'
+import { ErrorAlert } from './ErrorAlert'
 
 const Message = () => {
   const { endsAt } = useQuiz()
@@ -9,7 +12,7 @@ const Message = () => {
   if (Date.now() >= endsAt!) {
     return (
       <p>
-        Désolé, le temps est écoulé, mais les réponses envoyées ont bien été enregistrées.
+        Désolé, le temps est écoulé, mais les réponses validées ont bien été enregistrées.
         <img className="rounded-md w-full h-auto mt-5" src={slow} alt="" />
       </p>
     )
@@ -45,9 +48,23 @@ const Icon = () => {
 }
 
 export const EndPage = () => {
+  const { finishQuiz, loading, error } = useFinishQuiz()
+
+  useEffect(() => {
+    finishQuiz()
+  }, [finishQuiz])
+
   const handleQuit = () => {
     localStorage.clear()
     window.location.reload()
+  }
+
+  if (loading) {
+    return null
+  }
+
+  if (error) {
+    return <ErrorAlert>{error.message}</ErrorAlert>
   }
 
   return (

@@ -1,4 +1,4 @@
-import { formatDuration, intervalToDuration } from 'date-fns'
+import { formatDuration, intervalToDuration, formatISO } from 'date-fns'
 import { fr as locale } from 'date-fns/locale'
 
 export const formatIntervalForHuman = (start: number, end: number) => {
@@ -14,3 +14,5 @@ export const formatIntervalForHuman = (start: number, end: number) => {
 }
 
 export const formatDurationForHuman = (duration: number) => formatIntervalForHuman(0, duration * 1000)
+
+export { formatISO }

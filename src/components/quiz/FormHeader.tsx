@@ -26,7 +26,8 @@ const useShouldLoad = (loading: boolean, onClick: () => void) => {
 
   return { shouldLoad, handleClick }
 }
-function PreviousButton({ loading, onClick }: { onClick: () => void, loading: boolean }) {
+
+const PreviousButton = ({ loading, onClick }: { onClick: () => void, loading: boolean }) => {
   const { currentQuestionIndex } = useQuiz()
   const { handleClick, shouldLoad } = useShouldLoad(loading, onClick)
 
@@ -40,7 +41,7 @@ function PreviousButton({ loading, onClick }: { onClick: () => void, loading: bo
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className="inline-flex items-center px-4 py-2 border border-gray-300 text-xs sm:text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:ring-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out"
+        className="inline-flex items-center px-4 py-2 border border-gray-300 text-xs sm:text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:ring-gray-500 focus:border-gray-500 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out"
       >
         <LoadingIcon loading={shouldLoad} className="-ml-1 mr-2 h-5 w-5 text-gray-500">
           <svg className="-ml-1 mr-2 h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,18 +59,26 @@ type NextButtonProps = { onClick: () => void, loading: boolean, isLastQuestion: 
 const NextButton = ({ loading, onClick, isLastQuestion }: NextButtonProps) => {
   const { handleClick, shouldLoad } = useShouldLoad(loading, onClick)
 
+  const colorClassNames = isLastQuestion
+    ? 'text-green-900 bg-green-400 hover:bg-green-300 focus:ring-green focus:border-green-700 active:bg-green-500'
+    : 'text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-indigo focus:border-indigo-700 active:bg-indigo-700'
+
   return (
     <span className="shadow-sm rounded-md">
       <button
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className="inline-flex items-center px-4 py-2 border border-transparent text-xs sm:text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out"
+        className={`inline-flex items-center px-4 py-2 border border-transparent text-xs sm:text-sm leading-5 font-medium rounded-md transition duration-150 ease-in-out focus:outline-none ${colorClassNames}`}
       >
         {isLastQuestion ? 'Terminer' : 'Question suivante'}
         <LoadingIcon loading={shouldLoad} className="-mr-1 ml-2 h-5 w-5">
           <svg className="-mr-1 ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            {
+              isLastQuestion
+                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            }
           </svg>
         </LoadingIcon>
       </button>

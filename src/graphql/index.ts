@@ -1,7 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
-import { GetAnswerDocument, useAddAnswerMutation, useGetAnswerLazyQuery, useInsertUserMutation } from './codegen'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  GetAnswerDocument,
+  useAddAnswerMutation,
+  useFinishQuizMutation,
+  useGetAnswerLazyQuery,
+  useInsertUserMutation,
+} from './codegen'
 import { useUser } from '../context/UserContext'
 import { useQuiz } from '../context/QuizContext'
+import { formatISO } from '../utils/dates'
 
 export const useCurrentAnswers = () => {
   const [fetchAnswers, { data, loading: fetchLoading }] = useGetAnswerLazyQuery()
@@ -57,4 +64,18 @@ export const useInsertUser = () => {
   const insertUser = (user: { email: string, name: string }) => mutation({ variables: user })
 
   return { insertUser, loading }
+}
+
+export const useFinishQuiz = () => {
+  const { user } = useUser()
+  const [mutation, { loading, error }] = useFinishQuizMutation()
+
+  const finishQuiz = useCallback(() => mutation({
+    variables: {
+      id: user.id,
+      finishedAt: formatISO(new Date()),
+    },
+  }), [mutation, user.id])
+
+  return { finishQuiz, loading, error }
 }

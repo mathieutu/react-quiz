@@ -4,7 +4,7 @@ import { useAndAssertContext, useLocalStorageState } from '../utils/hooks'
 type User = {
   id: string,
   email: string,
-  name: string
+  name: string,
 }
 
 type UserContext = { user: User, setUser: (user: User) => void }

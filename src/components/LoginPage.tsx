@@ -22,7 +22,16 @@ export const LoginPage = () => {
     event.preventDefault()
 
     insertUser(userInput)
-      .then(({ data }) => setUser(data?.user!))
+      .then(({ data }) => {
+        const user = data?.user
+
+        if (!user) {
+          setFormError('Le test est déjà fini pour vous, désolé !')
+          return
+        }
+
+        setUser(user)
+      })
       .catch(({ message }) => setFormError(message))
   }
 

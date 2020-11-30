@@ -57,6 +57,12 @@ type mutation_root {
     "on conflict condition"
     on_conflict: users_on_conflict
   ): users_mutation_response
+  "update single row of the table: \"users\""
+  updateUser(
+    "sets the columns of the filtered rows to the given values"
+    _set: users_set_input,
+    pk_columns: users_pk_columns_input!
+  ): users
   "update data of the table: \"answers\""
   update_answers(
     "append existing jsonb value of filtered columns with new jsonb value"
@@ -97,12 +103,6 @@ type mutation_root {
     "filter the rows which have to be updated"
     where: users_bool_exp!
   ): users_mutation_response
-  "update single row of the table: \"users\""
-  update_users_by_pk(
-    "sets the columns of the filtered rows to the given values"
-    _set: users_set_input,
-    pk_columns: users_pk_columns_input!
-  ): users
 }
 
 "query root"
@@ -189,6 +189,7 @@ type users {
     where: answers_bool_exp
   ): [answers!]!
   email: String!
+  finished_at: timestamptz
   id: uuid!
   name: String!
 }
@@ -256,6 +257,8 @@ enum users_select_column {
   "column name"
   email
   "column name"
+  finished_at
+  "column name"
   id
   "column name"
   name
@@ -263,6 +266,8 @@ enum users_select_column {
 
 "update columns of table \"users\""
 enum users_update_column {
+  "column name"
+  finished_at
   "column name"
   name
 }
@@ -392,6 +397,19 @@ input jsonb_comparison_exp {
   _nin: [jsonb!]
 }
 
+"expression to compare columns of type timestamptz. All fields are combined with logical 'AND'."
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
 "input type for inserting array relation for remote table \"users\""
 input users_arr_rel_insert_input {
   data: [users_insert_input!]!
@@ -405,6 +423,7 @@ input users_bool_exp {
   _or: [users_bool_exp]
   answers: answers_bool_exp
   email: String_comparison_exp
+  finished_at: timestamptz_comparison_exp
   id: uuid_comparison_exp
   name: String_comparison_exp
 }
@@ -413,6 +432,7 @@ input users_bool_exp {
 input users_insert_input {
   answers: answers_arr_rel_insert_input
   email: String
+  finished_at: timestamptz
   name: String
 }
 
@@ -432,6 +452,7 @@ input users_on_conflict {
 "ordering options when selecting data from \"users\""
 input users_order_by {
   email: order_by
+  finished_at: order_by
   id: order_by
   name: order_by
 }
@@ -443,6 +464,7 @@ input users_pk_columns_input {
 
 "input type for updating data in table \"users\""
 input users_set_input {
+  finished_at: timestamptz
   name: String
 }
 
@@ -461,5 +483,7 @@ input uuid_comparison_exp {
 
 
 scalar jsonb
+
+scalar timestamptz
 
 scalar uuid

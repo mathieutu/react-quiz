@@ -4,6 +4,8 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,6 +14,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   jsonb: string[];
+  timestamptz: string;
   uuid: string;
 };
 
@@ -201,14 +204,14 @@ export type Mutation_Root = {
   insert_answers: Maybe<Answers_Mutation_Response>;
   /** insert data into the table: "users" */
   insert_users: Maybe<Users_Mutation_Response>;
+  /** update single row of the table: "users" */
+  updateUser: Maybe<Users>;
   /** update data of the table: "answers" */
   update_answers: Maybe<Answers_Mutation_Response>;
   /** update single row of the table: "answers" */
   update_answers_by_pk: Maybe<Answers>;
   /** update data of the table: "users" */
   update_users: Maybe<Users_Mutation_Response>;
-  /** update single row of the table: "users" */
-  update_users_by_pk: Maybe<Users>;
 };
 
 
@@ -241,6 +244,13 @@ export type Mutation_RootInsert_UsersArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateUserArgs = {
+  _set: Maybe<Users_Set_Input>;
+  pk_columns: Users_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_AnswersArgs = {
   _append: Maybe<Answers_Append_Input>;
   _delete_at_path: Maybe<Answers_Delete_At_Path_Input>;
@@ -268,13 +278,6 @@ export type Mutation_RootUpdate_Answers_By_PkArgs = {
 export type Mutation_RootUpdate_UsersArgs = {
   _set: Maybe<Users_Set_Input>;
   where: Users_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Users_By_PkArgs = {
-  _set: Maybe<Users_Set_Input>;
-  pk_columns: Users_Pk_Columns_Input;
 };
 
 /** column ordering options */
@@ -381,11 +384,26 @@ export type Subscription_RootUsers_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
+
+/** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq: Maybe<Scalars['timestamptz']>;
+  _gt: Maybe<Scalars['timestamptz']>;
+  _gte: Maybe<Scalars['timestamptz']>;
+  _in: Maybe<Array<Scalars['timestamptz']>>;
+  _is_null: Maybe<Scalars['Boolean']>;
+  _lt: Maybe<Scalars['timestamptz']>;
+  _lte: Maybe<Scalars['timestamptz']>;
+  _neq: Maybe<Scalars['timestamptz']>;
+  _nin: Maybe<Array<Scalars['timestamptz']>>;
+};
+
 /** columns and relationships of "users" */
 export type Users = {
   /** An array relationship */
   answers: Array<Answers>;
   email: Scalars['String'];
+  finished_at: Maybe<Scalars['timestamptz']>;
   id: Scalars['uuid'];
   name: Scalars['String'];
 };
@@ -413,6 +431,7 @@ export type Users_Bool_Exp = {
   _or: Maybe<Array<Maybe<Users_Bool_Exp>>>;
   answers: Maybe<Answers_Bool_Exp>;
   email: Maybe<String_Comparison_Exp>;
+  finished_at: Maybe<Timestamptz_Comparison_Exp>;
   id: Maybe<Uuid_Comparison_Exp>;
   name: Maybe<String_Comparison_Exp>;
 };
@@ -429,6 +448,7 @@ export enum Users_Constraint {
 export type Users_Insert_Input = {
   answers: Maybe<Answers_Arr_Rel_Insert_Input>;
   email: Maybe<Scalars['String']>;
+  finished_at: Maybe<Scalars['timestamptz']>;
   name: Maybe<Scalars['String']>;
 };
 
@@ -456,6 +476,7 @@ export type Users_On_Conflict = {
 /** ordering options when selecting data from "users" */
 export type Users_Order_By = {
   email: Maybe<Order_By>;
+  finished_at: Maybe<Order_By>;
   id: Maybe<Order_By>;
   name: Maybe<Order_By>;
 };
@@ -470,6 +491,8 @@ export enum Users_Select_Column {
   /** column name */
   Email = 'email',
   /** column name */
+  FinishedAt = 'finished_at',
+  /** column name */
   Id = 'id',
   /** column name */
   Name = 'name'
@@ -477,11 +500,14 @@ export enum Users_Select_Column {
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
+  finished_at: Maybe<Scalars['timestamptz']>;
   name: Maybe<Scalars['String']>;
 };
 
 /** update columns of table "users" */
 export enum Users_Update_Column {
+  /** column name */
+  FinishedAt = 'finished_at',
   /** column name */
   Name = 'name'
 }
@@ -523,7 +549,21 @@ export type InsertUserMutationVariables = Exact<{
 }>;
 
 
-export type InsertUserMutation = { user: Maybe<Pick<Users, 'id' | 'email' | 'name'>> };
+export type InsertUserMutation = { user: Maybe<(
+    Pick<Users, 'id' | 'email' | 'name'>
+    & { finishedAt: Users['finished_at'] }
+  )> };
+
+export type FinishQuizMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  finishedAt: Scalars['timestamptz'];
+}>;
+
+
+export type FinishQuizMutation = { user: Maybe<(
+    Pick<Users, 'id' | 'email' | 'name'>
+    & { finishedAt: Users['finished_at'] }
+  )> };
 
 
 export const GetAnswerDocument = gql`
@@ -563,7 +603,10 @@ export type GetAnswerLazyQueryHookResult = ReturnType<typeof useGetAnswerLazyQue
 export type GetAnswerQueryResult = Apollo.QueryResult<GetAnswerQuery, GetAnswerQueryVariables>;
 export const AddAnswerDocument = gql`
     mutation AddAnswer($answers: jsonb, $questionId: String, $userId: uuid) {
-  addAnswer(object: {answers: $answers, question_id: $questionId, user_id: $userId}, on_conflict: {constraint: answers_user_id_question_id_key, update_columns: answers}) {
+  addAnswer(
+    object: {answers: $answers, question_id: $questionId, user_id: $userId}
+    on_conflict: {constraint: answers_user_id_question_id_key, update_columns: answers}
+  ) {
     id
     answers
   }
@@ -598,10 +641,14 @@ export type AddAnswerMutationResult = Apollo.MutationResult<AddAnswerMutation>;
 export type AddAnswerMutationOptions = Apollo.BaseMutationOptions<AddAnswerMutation, AddAnswerMutationVariables>;
 export const InsertUserDocument = gql`
     mutation InsertUser($email: String, $name: String) {
-  user: addUser(object: {email: $email, name: $name}, on_conflict: {constraint: users_email_key, update_columns: name}) {
+  user: addUser(
+    object: {email: $email, name: $name}
+    on_conflict: {constraint: users_email_key, update_columns: name}
+  ) {
     id
     email
     name
+    finishedAt: finished_at
   }
 }
     `;
@@ -631,3 +678,39 @@ export function useInsertUserMutation(baseOptions?: Apollo.MutationHookOptions<I
 export type InsertUserMutationHookResult = ReturnType<typeof useInsertUserMutation>;
 export type InsertUserMutationResult = Apollo.MutationResult<InsertUserMutation>;
 export type InsertUserMutationOptions = Apollo.BaseMutationOptions<InsertUserMutation, InsertUserMutationVariables>;
+export const FinishQuizDocument = gql`
+    mutation FinishQuiz($id: uuid!, $finishedAt: timestamptz!) {
+  user: updateUser(pk_columns: {id: $id}, _set: {finished_at: $finishedAt}) {
+    id
+    email
+    name
+    finishedAt: finished_at
+  }
+}
+    `;
+export type FinishQuizMutationFn = Apollo.MutationFunction<FinishQuizMutation, FinishQuizMutationVariables>;
+
+/**
+ * __useFinishQuizMutation__
+ *
+ * To run a mutation, you first call `useFinishQuizMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFinishQuizMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [finishQuizMutation, { data, loading, error }] = useFinishQuizMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      finishedAt: // value for 'finishedAt'
+ *   },
+ * });
+ */
+export function useFinishQuizMutation(baseOptions?: Apollo.MutationHookOptions<FinishQuizMutation, FinishQuizMutationVariables>) {
+        return Apollo.useMutation<FinishQuizMutation, FinishQuizMutationVariables>(FinishQuizDocument, baseOptions);
+      }
+export type FinishQuizMutationHookResult = ReturnType<typeof useFinishQuizMutation>;
+export type FinishQuizMutationResult = Apollo.MutationResult<FinishQuizMutation>;
+export type FinishQuizMutationOptions = Apollo.BaseMutationOptions<FinishQuizMutation, FinishQuizMutationVariables>;

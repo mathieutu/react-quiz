@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "build:css": "postcss node_modules/tailwindcss/tailwind.css -o src/assets/css/tailwind.css",
     "generate:graphql": "graphql-codegen -r dotenv/config",
-    "deploy": "yarn build && netlify deploy"
+    "deploy": "yarn build && netlify deploy -d build"
   },
   "dependencies": {
     "@apollo/client": "^3.2.9",

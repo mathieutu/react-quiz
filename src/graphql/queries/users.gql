@@ -6,5 +6,18 @@ mutation InsertUser($email: String, $name: String) {
     id
     email
     name
+    finishedAt: finished_at
+  }
+}
+
+mutation FinishQuiz($id: uuid!, $finishedAt: timestamptz!) {
+  user: updateUser(
+    pk_columns: {id: $id},
+    _set: {finished_at: $finishedAt}
+  ) {
+    id
+    email
+    name
+    finishedAt: finished_at
   }
 }
