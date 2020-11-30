@@ -12,16 +12,21 @@ export const QuizPage = () => {
 
   const { answers, setAnswers, submitAnswers, submitLoading, fetchLoading } = useCurrentAnswers()
 
-  const handleNext = () => submitAnswers().catch(e => {
-    // eslint-disable-next-line no-console
-    console.error(e)
-    setError(e.message)
-  }).then(goToNextQuestion)
-  const handlePrevious = () => submitAnswers().catch(e => {
-    // eslint-disable-next-line no-console
-    console.error(e)
-    setError(e.message)
-  }).then(goToPreviousQuestion)
+  const handleNext = () => submitAnswers()
+    .then(goToNextQuestion)
+    .catch(e => {
+      // eslint-disable-next-line no-console
+      console.error(e)
+      setError(e.message)
+    })
+
+  const handlePrevious = () => submitAnswers()
+    .then(goToPreviousQuestion)
+    .catch(e => {
+      // eslint-disable-next-line no-console
+      console.error(e)
+      setError(e.message)
+    })
 
   useEffect(() => {
     if (submitLoading || fetchLoading) {
