@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useAddAnswerMutation, useGetAnswerLazyQuery, useInsertUserMutation } from './codegen'
+import { useEffect, useMemo, useState } from 'react'
+import { GetAnswerDocument, useAddAnswerMutation, useGetAnswerLazyQuery, useInsertUserMutation } from './codegen'
 import { useUser } from '../context/UserContext'
 import { useQuiz } from '../context/QuizContext'
 
@@ -12,30 +12,38 @@ export const useCurrentAnswers = () => {
   const [answers, setAnswers] = useState<string[]>([])
   const [initialAnswers, setInitialAnswers] = useState<string[]>([])
 
-  useEffect(() => {
-    fetchAnswers({
-      variables: {
-        questionId: currentQuestion.id,
-        userId: user!.id,
-      },
-    })
-  }, [currentQuestion.id, fetchAnswers, user])
+  const variables = useMemo(() => ({
+    questionId: currentQuestion.id,
+    userId: user.id,
+  }), [currentQuestion.id, user.id])
 
   useEffect(() => {
-    setAnswers(data?.answers[0]?.answers ?? [])
-    setInitialAnswers(data?.answers[0]?.answers ?? [])
+    fetchAnswers({ variables })
+  }, [fetchAnswers, variables])
+
+  useEffect(() => {
+    const fetchedAnswers = data?.answers[0]?.answers ?? []
+
+    setInitialAnswers(fetchedAnswers)
+    setAnswers(fetchedAnswers)
   }, [data?.answers])
 
   const submitAnswers = async () => {
-    if (answers.length === initialAnswers.length && answers.every((value, index) => initialAnswers[index] === value)) {
+    const answersHaventChanged = answers.length === initialAnswers.length
+      && answers.every((value, index) => initialAnswers[index] === value)
+
+    if (answersHaventChanged) {
       return
     }
 
     await addAnswer({
-      variables: {
-        questionId: currentQuestion.id,
-        userId: user!.id,
-        answers,
+      variables: { ...variables, answers },
+      update(cache, { data: newData }) {
+        cache.writeQuery({
+          query: GetAnswerDocument,
+          variables,
+          data: newData?.addAnswer,
+        })
       },
     })
   }

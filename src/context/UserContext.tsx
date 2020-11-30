@@ -7,14 +7,14 @@ type User = {
   name: string
 }
 
-type UserContext = { user: User | null, setUser: (user: User) => void }
+type UserContext = { user: User, setUser: (user: User) => void }
 
 const userContext = React.createContext<UserContext | undefined>(undefined)
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useLocalStorageState<User | null>('user', null)
 
-  return <userContext.Provider value={{ user, setUser }}>{children}</userContext.Provider>
+  return <userContext.Provider value={{ user: user!, setUser }}>{children}</userContext.Provider>
 }
 
 export const useUser = () => useAndAssertContext(userContext)
